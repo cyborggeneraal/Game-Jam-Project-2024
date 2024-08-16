@@ -53,7 +53,6 @@ public class CameraController : MonoBehaviour
         transform.position += Quaternion.Euler(0.0f, transform.rotation.eulerAngles.y, 0.0f) * moveCamDir * Time.fixedDeltaTime;
         float newCamDistance = Vector3.Distance(camTransform.position, transform.position) + zoomCam * Time.fixedDeltaTime;
         newCamDistance = Mathf.Clamp(newCamDistance, 2.0f, 10.0f);
-        Debug.Log(camTransform.position);
         camTransform.position = transform.position + transform.rotation * Vector3.back * newCamDistance;
     }
 }
