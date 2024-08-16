@@ -7,7 +7,7 @@ public class ShipMovement : MonoBehaviour
     float t = 0.0f;
     float dir = 1.0f;
 
-    [SerializeField] float speed = 10.0f;
+    [SerializeField] float speed = 1.0f;
 
     [SerializeField] Transform planetA;
     [SerializeField] Transform planetB;
