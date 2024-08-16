@@ -1,0 +1,12 @@
+{
+  "resource_multipliers": {
+    "pluto": {
+       "iron": 2,
+       "wood": 1,
+      "mdma": 100
+
+    }
+
+  }
+
+}
