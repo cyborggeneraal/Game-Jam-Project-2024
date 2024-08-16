@@ -6,5 +6,8 @@ public enum Resource
 {
     Wood,
     Coal,
-    Wheat
+    Wheat,
+    Stone,
+    Iron,
+    Oil
 }

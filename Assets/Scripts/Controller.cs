@@ -6,10 +6,12 @@ public class Controller : MonoBehaviour
 {
     public Planet planeet;
 
+    
+
     // Start is called before the first frame update
     void Start()
     {
-        planeet = new Planet(new Dictionary<Resource, int>(){{Resource.Wood, 2}}, 3, new Dictionary<Resource, int>(){{Resource.Wood, 1}}, 1, new Dictionary<Resource, int>(){{Resource.Wood, 2}});
+        planeet = new Planet(new Dictionary<Resource, int>(){{Resource.Wood, 2}, {Resource.Coal, 1}}, 3, new Dictionary<Resource, int>(){{Resource.Wood, 1}, {Resource.Coal, 1}}, 1, new Dictionary<Resource, int>(){{Resource.Wood, 2}});
         
     }
 
@@ -18,7 +20,7 @@ public class Controller : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire1"))
         {
-            Debug.Log("Stock: " + planeet.stock[Resource.Wood].ToString() + " Needs: " + planeet.needs[Resource.Wood].ToString() + " Statisfaction: " + planeet.statisfaction.ToString());
+            Debug.Log("Wood: " + planeet.stock[Resource.Wood].ToString() + " Coal: " + planeet.needs[Resource.Coal].ToString() + " Statisfaction: " + planeet.statisfaction.ToString());
         }
             
         if (Input.GetButtonDown("Fire2"))
