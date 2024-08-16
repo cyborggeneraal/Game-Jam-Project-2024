@@ -10,11 +10,11 @@ public class SupplyLine
     public Dictionary<Resource, int> delivery_b;
 
 
-    public SupplyLine(Planet planet_a, planet planet_b, Dictionary<Resource, int> delivery_a, Dictionary<Resource, int> delivery_b)
+    public SupplyLine(Planet pa, Planet pb, Dictionary<Resource, int> da, Dictionary<Resource, int> db)
     {
-        planet_a = planet_a;
-        planet_b = planet_b;
-        delivery_a = delivery_a;
-        delivery_b = delivery_b;
+        planet_a = pa;
+        planet_b = pb;
+        delivery_a = da;
+        delivery_b = db;
     }
 }
