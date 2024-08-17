@@ -122,7 +122,7 @@ public class Planet
     {
         if(resources.ContainsKey(to))
         {
-            if(getWorkers(to) < resources[to] & getWorkers(to) > 0)
+            if((getWorkers(to) - resources[to]) <= n & workers.ContainsKey(to))
             {
                 workers[to] += n;
             }
