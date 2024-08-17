@@ -232,9 +232,7 @@ public class Planet
             case Ship.Wooden:
                 if(getStock(Resource.Wood) >= 10 && getStock(Resource.Coal) >= 10)
                 {
-                    Debug.Log(getStock(Resource.Wood));
                     stock[Resource.Wood] -= 10;
-                    Debug.Log(getStock(Resource.Wood));
                     stock[Resource.Coal] -= 10;
                     UIController.instance.updateAllInfo();
                     return new supplyLine(this, planet, ship);
