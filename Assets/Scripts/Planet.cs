@@ -12,7 +12,6 @@ public class Planet
     public Dictionary<Resource, int> workers;
     public int statisfaction;
     public int punishment;
-    public int multiplier;
     public int idle_workers;
     public Vector3 position;
 
@@ -110,7 +109,7 @@ public class Planet
 
     public void removeWorkersFromIdle(int n)
     {
-        if(idle_workers > 0)
+        if(idle_workers >= n)
         {
             idle_workers -= n;
         }
