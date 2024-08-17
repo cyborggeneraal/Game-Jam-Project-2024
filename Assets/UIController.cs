@@ -53,7 +53,7 @@ public class UIController : MonoBehaviour
                 if (!placeShipMode)
                 {
                     DeselectAllPlanets();
-                    hit.collider.gameObject.GetComponent<Outline>().enabled = true;
+                    hit.collider.gameObject.GetComponent<OutlineParent>().setOutline(true);
 
                     int index = hit.collider.gameObject.GetComponent<PlanetGameObject>().getIndex();
 
@@ -106,7 +106,7 @@ public class UIController : MonoBehaviour
     {
         foreach (PlanetGameObject planetGameObject in PlanetsController.instance.getAllPlanetGameObjects())
         {
-            planetGameObject.gameObject.GetComponent<Outline>().enabled = false;
+            planetGameObject.gameObject.GetComponent<OutlineParent>().setOutline(false);
         }
     }
 
