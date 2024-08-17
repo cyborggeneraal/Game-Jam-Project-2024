@@ -82,9 +82,12 @@ public class Planet
             addWorkersToResource(to, 1);
             idle_workers -= 1;
         }
+<<<<<<< HEAD
         else
             Debug.LogError("There are no workers for this resource");
         
+=======
+>>>>>>> caf00fba5e9875bc68fe3d560a03a4a13b0b3323
     }
 
     public void unassignWorker(Resource from)
