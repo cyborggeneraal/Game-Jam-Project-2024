@@ -63,6 +63,11 @@ public class PlanetsController : MonoBehaviour
         return planetGameObjects;
     }
 
+    public List<Planet> getAllPlanets()
+    {
+        return planets;
+    }
+
     public void firstPlanet()
     {
         GameObject planetGameObject = Instantiate(planet, Vector3.zero, Quaternion.identity);

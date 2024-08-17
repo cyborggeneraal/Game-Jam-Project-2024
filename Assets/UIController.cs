@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class UIController : MonoBehaviour
     [SerializeField] List<UIResourceRow> UIRows;
     [SerializeField] List<Resource> UIResources;
     [SerializeField] TMP_Text idleWorkersCount;
+    [SerializeField] GameObject tooltipPanel;
+    [SerializeField] TMP_Text tooltipText;
 
     public static UIController instance;
 
@@ -67,6 +70,11 @@ public class UIController : MonoBehaviour
                 selectedIndex = -1;
             }
         }
+
+        if (tooltipPanel.activeSelf)
+        {
+            tooltipPanel.transform.position = Input.mousePosition;
+        }
     }
 
     void DeselectAllPlanets()
@@ -91,5 +99,24 @@ public class UIController : MonoBehaviour
     {
         Planet planet = PlanetsController.instance.getPlanetById(selectedIndex);
         idleWorkersCount.text = planet.idle_workers.ToString();
+    }
+
+    public void updateAllInfo()
+    {
+        foreach (UIResourceRow row in UIRows)
+        {
+            row.updateInfo();
+        }
+        updateIdleWorkers();
+    }
+
+    public void showTooltip(bool show = true)
+    {
+        tooltipPanel.SetActive(show);
+    }
+
+    public void setTooltipText(string text)
+    {
+        tooltipText.text = text;
     }
 }
