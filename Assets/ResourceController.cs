@@ -8,6 +8,7 @@ public class ResourceController : MonoBehaviour
 
     [SerializeField] float countdown = 5.0f;
     float countdownT = 0.0f;
+    public List<Resource> unlockedResources;
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +21,7 @@ public class ResourceController : MonoBehaviour
         {
             instance = this;
         }
+        updateUnlockedResources();
     }
 
     // Update is called once per frame
@@ -36,9 +38,32 @@ public class ResourceController : MonoBehaviour
             foreach (Planet planet in PlanetsController.instance.getAllPlanets())
             {
                 planet.fillStock();
-                UIController.instance.updateAllInfo();
+                if (UIController.instance.getSelectedIndex() != -1)
+                {
+                    UIController.instance.updateAllInfo();
+                }
             }
             countdownT -= countdown;
+        }
+    }
+
+    public void updateUnlockedResources()
+    {
+        HashSet<Resource> set = new HashSet<Resource>();
+        foreach (Planet planet in PlanetsController.instance.getAllPlanets())
+        {
+            foreach (Resource resource in planet.resources.Keys)
+            {
+                set.Add(resource);
+            }
+        }
+        unlockedResources = new List<Resource>();
+        foreach (Resource resource in System.Enum.GetValues(typeof(Resource)))
+        {
+            if (set.Contains(resource))
+            {
+                unlockedResources.Add(resource);
+            }
         }
     }
 
