@@ -31,82 +31,10 @@ public class Planet
         position.z = z;   
     }
 
-<<<<<<< HEAD
+
+
     //1. Resource
     //1.1 Resource managament
-=======
-    //Fill
-    public void fillNeeds()
-    {
-        foreach(KeyValuePair<Resource, int> need in needs)
-        {
-            if (need.Value > stock[need.Key])
-            {
-                statisfaction -= ((need.Value - stock[need.Key]) * punishment);
-                stock[need.Key] = 0;
-            }
-            else
-                stock[need.Key] = (stock[need.Key] - need.Value);
-        }
-    }
-
-    public void fillStock()
-    {
-        foreach(KeyValuePair<Resource, int> worker in workers)
-            if(stock.ContainsKey(worker.Key))
-                stock[worker.Key] = stock[worker.Key] + (worker.Value * multipliers[worker.Key]);
-
-            else
-                stock.Add(worker.Key, (worker.Value * 1));
-    }
-
-    //Assign
-    public void removeWorkersFromResource(Resource from, int n)
-    {
-        if(getWorkers(from) >= n)
-        {
-            workers[from] -= n;
-        }
-        else
-            Debug.LogError("There are no workers for this resource");
-    }
-
-    public void addWorkersToResource(Resource to, int n)
-    {
-        if(workers.ContainsKey(to))
-            workers[to] += n;
-        else
-            workers.Add(to, n);
-    }
-
-    public void assignWorker(Resource to)
-    {
-        if (idle_workers > 0)
-        {
-            addWorkersToResource(to, 1);
-            idle_workers -= 1;
-        }
-        else
-        {
-            throw new System.ArgumentException("There are no workers for this resource");
-        }
-        
-    }
-
-    public void unassignWorker(Resource from)
-    {   
-        removeWorkersFromResource(from, 1);
-        idle_workers += 1;
-    }
-        
-    public void resignWorker(Resource from, Resource to)
-    {
-        removeWorkersFromResource(from, 1);
-        addWorkersToResource(to, 1);
-    }
-
-    //Get
->>>>>>> 20b5e229da7b1939846290dc046ed13ca548b72b
     public int getStock(Resource resource)
     {
         if (stock.ContainsKey(resource))
@@ -131,7 +59,7 @@ public class Planet
             return 0;
         }
     }
-    
+
     public int getNeeds(Resource resource)
     {
         return needs.ContainsKey(resource) ? needs[resource] : 0;
@@ -141,6 +69,8 @@ public class Planet
     {
         return workers.ContainsKey(resource) ? workers[resource] : 0;
     }
+
+
 
     //1.2 Resource fulfillment
     public void fillNeeds()
