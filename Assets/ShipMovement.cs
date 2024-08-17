@@ -45,4 +45,10 @@ public class ShipMovement : MonoBehaviour
         }
         transform.position = Vector3.Lerp(planetA.position, planetB.position, t);
     }
+
+    public void setPlanets(Transform planetA, Transform planetB)
+    {
+        this.planetA = planetA;
+        this.planetB = planetB;
+    }
 }

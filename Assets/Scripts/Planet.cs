@@ -178,6 +178,8 @@ public class Planet
     {
         resources.Add(resource, value);
         multipliers.Add(resource, 1);
+
+        ResourceController.instance.updateUnlockedResources();
     }
 
     public void addNeed(Resource resource, int value)
@@ -213,9 +215,11 @@ public class Planet
         switch(ship)
         {
             case Ship.Wooden:
-                if(stock[Resource.Wood] > 2)
+                if(getStock(Resource.Wood) >= 10 && getStock(Resource.Coal) >= 10)
                 {
-                    stock[Resource.Wood] -= 2;
+                    stock[Resource.Wood] -= 10;
+                    stock[Resource.Coal] -= 10;
+                    UIController.instance.updateAllInfo();
                     return new supplyLine(this, planet, ship);
                 }
                 break;

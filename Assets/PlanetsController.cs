@@ -9,7 +9,7 @@ public class PlanetsController : MonoBehaviour
     List<Planet> planets;
     List<PlanetGameObject> planetGameObjects;
 
-    [SerializeField] GameObject planet;
+    [SerializeField] GameObject planetPrefab;
 
     // Start is called before the first frame update
     void Awake()
@@ -70,7 +70,17 @@ public class PlanetsController : MonoBehaviour
 
     public void firstPlanet()
     {
-        GameObject planetGameObject = Instantiate(planet, Vector3.zero, Quaternion.identity);
+        GameObject planetGameObject = Instantiate(planetPrefab, Vector3.zero, Quaternion.identity);
+        Planet planet = getPlanetById(planetGameObject.GetComponent<PlanetGameObject>().getIndex());
+        planet.addWorker(5);
+        planet.addResource(Resource.Wood, 10);
+        planet.addResource(Resource.Coal, 10);
+        planet.assignWorker(Resource.Wood);
+        planet.assignWorker(Resource.Coal);
+        planetGameObject.GetComponent<PlanetGameObject>().setVariant(1);
+
+        GameObject planetGameObject2 = Instantiate(planetPrefab, new Vector3(5.0f, 0.0f, 0.0f), Quaternion.identity);
+        Planet planet2 = getPlanetById(planetGameObject2.GetComponent<PlanetGameObject>().getIndex());
     }
 
     public void addWorkerToResource(Resource resource)
