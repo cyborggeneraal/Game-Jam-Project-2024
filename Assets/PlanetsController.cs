@@ -9,6 +9,8 @@ public class PlanetsController : MonoBehaviour
     List<Planet> planets;
     List<PlanetGameObject> planetGameObjects;
 
+    [SerializeField] GameObject planet;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -27,6 +29,7 @@ public class PlanetsController : MonoBehaviour
 
     private void Start()
     {
+        firstPlanet();
     }
 
     public int addPlanet(Planet planet, PlanetGameObject planetGameObject)
@@ -58,5 +61,10 @@ public class PlanetsController : MonoBehaviour
     public List<PlanetGameObject> getAllPlanetGameObjects()
     {
         return planetGameObjects;
+    }
+
+    public void firstPlanet()
+    {
+        GameObject planetGameObject = Instantiate(planet, Vector3.zero, Quaternion.identity);
     }
 }
