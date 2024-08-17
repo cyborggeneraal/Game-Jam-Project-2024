@@ -9,7 +9,6 @@ public class PlanetsController : MonoBehaviour
     List<Planet> planets;
     List<PlanetGameObject> planetGameObjects;
 
-    [SerializeField] GameObject planet;
 
     // Start is called before the first frame update
     void Awake()
@@ -70,7 +69,6 @@ public class PlanetsController : MonoBehaviour
 
     public void firstPlanet()
     {
-        GameObject planetGameObject = Instantiate(planet, Vector3.zero, Quaternion.identity);
     }
 
     public void addWorkerToResource(Resource resource)
