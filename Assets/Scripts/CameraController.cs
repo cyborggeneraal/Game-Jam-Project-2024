@@ -11,6 +11,12 @@ public class CameraController : MonoBehaviour
 
     [SerializeField] Transform camTransform;
 
+    [SerializeField] float minCamDis = 1.0f;
+    [SerializeField] float maxCamDis = 10.0f;
+    [SerializeField] float minCamRotate = 45.0f;
+    [SerializeField] float maxCamRotate = 90.0f;
+    [SerializeField] float maxCamRadius = 2.0f;
+
     Vector3 mousePos;
 
     Vector3 moveCamDir = Vector3.zero;
@@ -48,11 +54,13 @@ public class CameraController : MonoBehaviour
     {
         float newHorRotation = transform.rotation.eulerAngles.y + rotateCamHorDir;
         float newVerRotation = transform.rotation.eulerAngles.x + rotateCamVerDir;
-        newVerRotation = Mathf.Clamp(newVerRotation, 25, 60);
+        newVerRotation = Mathf.Clamp(newVerRotation, minCamRotate, maxCamRotate);
         transform.rotation = Quaternion.Euler(newVerRotation, newHorRotation, 0.0f);
-        transform.position += Quaternion.Euler(0.0f, transform.rotation.eulerAngles.y, 0.0f) * moveCamDir * Time.fixedDeltaTime;
+        Vector3 newPosition = transform.position + Quaternion.Euler(0.0f, transform.rotation.eulerAngles.y, 0.0f) * moveCamDir * Time.fixedDeltaTime;
+        newPosition = Vector3.ClampMagnitude(newPosition, maxCamRadius);
+        transform.position = newPosition;
         float newCamDistance = Vector3.Distance(camTransform.position, transform.position) + zoomCam * Time.fixedDeltaTime;
-        newCamDistance = Mathf.Clamp(newCamDistance, 2.0f, 10.0f);
+        newCamDistance = Mathf.Clamp(newCamDistance, minCamDis, maxCamDis);
         camTransform.position = transform.position + transform.rotation * Vector3.back * newCamDistance;
     }
 }
