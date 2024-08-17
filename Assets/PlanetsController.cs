@@ -78,6 +78,9 @@ public class PlanetsController : MonoBehaviour
         planet.assignWorker(Resource.Wood);
         planet.assignWorker(Resource.Coal);
         planetGameObject.GetComponent<PlanetGameObject>().setVariant(1);
+
+        GameObject planetGameObject2 = Instantiate(planetPrefab, new Vector3(5.0f, 0.0f, 0.0f), Quaternion.identity);
+        Planet planet2 = getPlanetById(planetGameObject2.GetComponent<PlanetGameObject>().getIndex());
     }
 
     public void addWorkerToResource(Resource resource)

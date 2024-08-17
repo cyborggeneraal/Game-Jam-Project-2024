@@ -73,8 +73,13 @@ public class UIController : MonoBehaviour
                     {
                         Planet planetB = PlanetsController.instance.getPlanetById(index);
                         Planet planetA = PlanetsController.instance.getPlanetById(index);
-                        Debug.Log(planetA);
-                        Debug.Log(planetB);
+                        supplyLine supplyLine = planetA.buySupplyLine(Ship.Wooden, planetB);
+                        GameObject ship = Instantiate(SupplyLineController.instance.getShipPrefab());
+                        ship.transform.Rotate(0.0f, 180.0f, 0.0f, Space.World);
+                        SupplyLineController.instance.addSupplyLine(supplyLine, ship.GetComponent<ShipMovement>());
+                        Transform planetATransform = PlanetsController.instance.getPlanetGameObjectById(selectedIndex).gameObject.transform;
+                        Transform planetBTransform = PlanetsController.instance.getPlanetGameObjectById(index).gameObject.transform;
+                        ship.GetComponent<ShipMovement>().setPlanets(planetATransform, planetBTransform);
                         placeShipMessage.SetActive(false);
                         placeShipMode = false;
                     }
@@ -157,7 +162,6 @@ public class UIController : MonoBehaviour
         Planet selectedPlanet = PlanetsController.instance.getPlanetById(selectedIndex);
         if (selectedPlanet.getStock(Resource.Wood) >= 10 && selectedPlanet.getStock(Resource.Coal) >= 10)
         {
-            Debug.Log("Buy Ship");
             placeShipMessage.SetActive(true);
             placeShipMode = true;
         }
