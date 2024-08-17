@@ -31,75 +31,8 @@ public class Planet
         position.z = z;   
     }
 
-    //Fill
-    public void fillNeeds()
-    {
-        foreach(KeyValuePair<Resource, int> need in needs)
-        {
-            if (need.Value > stock[need.Key])
-            {
-                statisfaction -= ((need.Value - stock[need.Key]) * punishment);
-                stock[need.Key] = 0;
-            }
-            else
-                stock[need.Key] = (stock[need.Key] - need.Value);
-        }
-    }
-
-    public void fillStock()
-    {
-        foreach(KeyValuePair<Resource, int> worker in workers)
-            if(stock.ContainsKey(worker.Key))
-                stock[worker.Key] = stock[worker.Key] + (worker.Value * multipliers[worker.Key]);
-
-            else
-                stock.Add(worker.Key, (worker.Value * 1));
-    }
-
-    //Assign
-    public void removeWorkersFromResource(Resource from, int n)
-    {
-        if(getWorkers(from) >= n)
-        {
-            workers[from] -= n;
-        }
-        else
-            Debug.LogError("There are no workers for this resource");
-    }
-
-    public void addWorkersToResource(Resource to, int n)
-    {
-        if(workers.ContainsKey(to))
-            workers[to] += n;
-        else
-            workers.Add(to, n);
-    }
-
-    public void assignWorker(Resource to)
-    {   
-        if(idle_workers > 0)
-        {
-            addWorkersToResource(to, 1);
-            idle_workers -= 1;
-        }
-        else
-            Debug.LogError("There are no workers for this resource");
-        
-    }
-
-    public void unassignWorker(Resource from)
-    {   
-        removeWorkersFromResource(from, 1);
-        idle_workers += 1;
-    }
-        
-    public void resignWorker(Resource from, Resource to)
-    {
-        removeWorkersFromResource(from, 1);
-        addWorkersToResource(to, 1);
-    }
-
-    //Get
+    //1. Resource
+    //1.1 Resource managament
     public int getStock(Resource resource)
     {
         if (stock.ContainsKey(resource))
@@ -135,14 +68,93 @@ public class Planet
         return workers.ContainsKey(resource) ? workers[resource] : 0;
     }
 
-    //Add
+    //1.2 Resource fulfillment
+    public void fillNeeds()
+    {
+        foreach(KeyValuePair<Resource, int> need in needs)
+        {
+            if (need.Value > stock[need.Key])
+            {
+                statisfaction -= ((need.Value - stock[need.Key]) * punishment);
+                stock[need.Key] = 0;
+            }
+            else
+                stock[need.Key] = (stock[need.Key] - need.Value);
+        }
+    }
+
+    public void fillStock()
+    {
+        foreach(KeyValuePair<Resource, int> worker in workers)
+            if(stock.ContainsKey(worker.Key))
+                stock[worker.Key] = stock[worker.Key] + getSurplus(worker.Key); //check multiplier
+            else
+                stock.Add(worker.Key, getSurplus(worker.Key));
+    }
+
+    //2. Workers
+    //2.1 Management 
+    public void removeWorkersFromResource(Resource from, int n)
+    {
+        if(getWorkers(from) >= n)
+        {
+            workers[from] -= n;
+        }
+        else
+            throw new System.ArgumentException("There are no workers for this resource");
+    }
+
+    public void removeWorkersFromIdle(int n)
+    {
+        if(idle_workers > 0)
+        {
+            idle_workers -= n;
+        }
+        else
+            throw new System.ArgumentException("There are no workers for this resource");
+    }
+
+    public void addWorkersToResource(Resource to, int n)
+    {
+        if(resources.ContainsKey(to))
+            if(workers.ContainsKey(to) & resources[to] > 0)
+                if(getWorkers(to) < resources[to])
+                    workers[to] += n;
+                else
+                    throw new System.ArgumentException("This resource has reached it's limit");
+            else
+                workers.Add(to, n);
+        else
+            throw new System.ArgumentException("This resource does not exist");
+    }
+
+    //2.2 Assign
+    public void assignWorker(Resource to)
+    {   
+        addWorkersToResource(to, 1);
+        removeWorkersFromIdle(1);   
+    }
+
+    public void unassignWorker(Resource from)
+    {   
+        removeWorkersFromResource(from, 1);
+        idle_workers += 1;
+    }
+        
+    public void resignWorker(Resource from, Resource to)
+    {
+        removeWorkersFromResource(from, 1);
+        addWorkersToResource(to, 1);
+    }
+
+    //3 properties
     public void addResource(Resource resource, int value)
     {
         resources.Add(resource, value);
         multipliers.Add(resource, 1);
     }
 
-    public void addNeeds(Resource resource, int value)
+    public void addNeed(Resource resource, int value)
     {
         needs.Add(resource, value);
     }
@@ -159,5 +171,4 @@ public class Planet
         else
             multipliers.Add(resource, value);
     }
-        
 }
