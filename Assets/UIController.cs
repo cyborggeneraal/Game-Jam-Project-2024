@@ -6,7 +6,8 @@ using TMPro;
 public class UIController : MonoBehaviour
 {
     [SerializeField] GameObject panel;
-    [SerializeField] TMP_Text woodCount;
+    [SerializeField] List<UIResourceRow> UIRows;
+    [SerializeField] List<Resource> UIResources;
 
     Camera cam;
     [SerializeField] LayerMask planets;
@@ -26,15 +27,36 @@ public class UIController : MonoBehaviour
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, planets))
             {
+                DeselectAllPlanets();
+                hit.collider.gameObject.GetComponent<Outline>().enabled = true;
+
                 int index = hit.collider.gameObject.GetComponent<PlanetGameObject>().getIndex();
                 Planet planet = PlanetsController.instance.getPlanetById(index);
-                woodCount.text = planet.stock[Resource.Wood].ToString();
+
+                for (int i = 0; i < UIRows.Count; i++)
+                {
+                    UIResourceRow UIRow = UIRows[i];
+                    Resource resource = UIResources[i];
+                    UIRow.updateStockInfo(planet.getStock(resource));
+                    UIRow.updateSurplusInfo(planet.getSurplus(resource), planet.getWorkers(resource));
+                    UIRow.updateNeedsInfo(planet.getNeeds(resource));
+                }
+
                 panel.SetActive(true);
             }
             else
             {
+                DeselectAllPlanets();
                 panel.SetActive(false);
             }
+        }
+    }
+
+    void DeselectAllPlanets()
+    {
+        foreach (PlanetGameObject planetGameObject in PlanetsController.instance.getAllPlanetGameObjects())
+        {
+            planetGameObject.gameObject.GetComponent<Outline>().enabled = false;
         }
     }
 }

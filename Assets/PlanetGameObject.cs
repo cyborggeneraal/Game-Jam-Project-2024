@@ -15,7 +15,7 @@ public class PlanetGameObject : MonoBehaviour
         planet.Add_worker(Resource.Wood);
         planet.Fill_Stock();
         planet.Fill_Stock();
-        index = PlanetsController.instance.addPlanet(planet);
+        index = PlanetsController.instance.addPlanet(planet, this);
     }
 
     // Update is called once per frame
