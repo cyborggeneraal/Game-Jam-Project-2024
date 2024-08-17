@@ -176,6 +176,8 @@ public class Planet
     {
         resources.Add(resource, value);
         multipliers.Add(resource, 1);
+
+        ResourceController.instance.updateUnlockedResources();
     }
 
     public void addNeed(Resource resource, int value)

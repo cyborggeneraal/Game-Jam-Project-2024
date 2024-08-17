@@ -8,10 +8,11 @@ public class UIController : MonoBehaviour
 {
     [SerializeField] GameObject panel;
     [SerializeField] List<UIResourceRow> UIRows;
-    [SerializeField] List<Resource> UIResources;
     [SerializeField] TMP_Text idleWorkersCount;
     [SerializeField] GameObject tooltipPanel;
     [SerializeField] TMP_Text tooltipText;
+
+    [SerializeField] GameObject placeShipMessage;
 
     public static UIController instance;
 
@@ -19,6 +20,8 @@ public class UIController : MonoBehaviour
     bool onUI = false;
     int selectedIndex = -1;
     [SerializeField] LayerMask planets;
+
+    bool placeShipMode = false;
 
     private void Awake()
     {
@@ -47,27 +50,43 @@ public class UIController : MonoBehaviour
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, planets))
             {
-                DeselectAllPlanets();
-                hit.collider.gameObject.GetComponent<Outline>().enabled = true;
-
-                int index = hit.collider.gameObject.GetComponent<PlanetGameObject>().getIndex();
-                Planet planet = PlanetsController.instance.getPlanetById(index);
-
-                selectedIndex = index;
-
-                foreach (UIResourceRow UIRow in UIRows)
+                if (!placeShipMode)
                 {
-                    UIRow.updateInfo();
-                }
-                updateIdleWorkers();
+                    DeselectAllPlanets();
+                    hit.collider.gameObject.GetComponent<Outline>().enabled = true;
 
-                panel.SetActive(true);
+                    int index = hit.collider.gameObject.GetComponent<PlanetGameObject>().getIndex();
+
+                    selectedIndex = index;
+
+                    updateAllInfo();
+                    updateIdleWorkers();
+
+                    panel.SetActive(true);
+                }
+                else
+                {
+                    updateAllInfo();
+                    int index = hit.collider.gameObject.GetComponent<PlanetGameObject>().getIndex();
+                    int selectedIndex = UIController.instance.selectedIndex;
+                    if (index != selectedIndex)
+                    {
+                        Planet planetB = PlanetsController.instance.getPlanetById(index);
+                        Planet planetA = PlanetsController.instance.getPlanetById(index);
+                        Debug.Log(planetA);
+                        Debug.Log(planetB);
+                        placeShipMessage.SetActive(false);
+                        placeShipMode = false;
+                    }
+                }
             }
             else
             {
                 DeselectAllPlanets();
                 panel.SetActive(false);
                 selectedIndex = -1;
+                placeShipMessage.SetActive(false);
+                placeShipMode = false;
             }
         }
 
@@ -75,6 +94,7 @@ public class UIController : MonoBehaviour
         {
             tooltipPanel.transform.position = Input.mousePosition;
         }
+
     }
 
     void DeselectAllPlanets()
@@ -103,6 +123,18 @@ public class UIController : MonoBehaviour
 
     public void updateAllInfo()
     {
+        for (int i = 0; i < UIRows.Count; i++)
+        {
+            if (i < ResourceController.instance.unlockedResources.Count)
+            {
+                UIRows[i].gameObject.SetActive(true);
+                UIRows[i].resource = ResourceController.instance.unlockedResources[i];
+            }
+            else
+            {
+                UIRows[i].gameObject.SetActive(false);
+            }
+        }
         foreach (UIResourceRow row in UIRows)
         {
             row.updateInfo();
@@ -118,5 +150,20 @@ public class UIController : MonoBehaviour
     public void setTooltipText(string text)
     {
         tooltipText.text = text;
+    }
+
+    public void buyShips()
+    {
+        Planet selectedPlanet = PlanetsController.instance.getPlanetById(selectedIndex);
+        if (selectedPlanet.getStock(Resource.Wood) >= 10 && selectedPlanet.getStock(Resource.Coal) >= 10)
+        {
+            Debug.Log("Buy Ship");
+            placeShipMessage.SetActive(true);
+            placeShipMode = true;
+        }
+        else
+        {
+            Debug.Log("Cannot Buy");
+        }
     }
 }

@@ -9,15 +9,9 @@ public class PlanetGameObject : MonoBehaviour
     int index;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         Planet planet = new Planet(0, 0, 0);
-        planet.addWorker(2);
-        planet.addResource(Resource.Wood, 3);
-        planet.addResource(Resource.Coal, 3);
-        planet.assignWorker(Resource.Wood);
-        planet.fillStock();
-        planet.fillStock();
         index = PlanetsController.instance.addPlanet(planet, this);
     }
 

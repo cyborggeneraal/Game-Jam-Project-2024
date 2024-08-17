@@ -6,13 +6,16 @@ using TMPro;
 
 public class UIResourceRow : MonoBehaviour
 {
+    [SerializeField] TMP_Text nameText;
     [SerializeField] TMP_Text stockText;
     [SerializeField] TMP_Text surplusText;
+    [SerializeField] TMP_Text receiveText;
     [SerializeField] TMP_Text needsText;
+    [SerializeField] TMP_Text deliverText;
     [SerializeField] Button plusWorkerButton;
     [SerializeField] Button minWorkerButton;
 
-    [SerializeField] Resource resource;
+    public Resource resource;
 
     // Start is called before the first frame update
     void Start()
@@ -29,9 +32,15 @@ public class UIResourceRow : MonoBehaviour
     public void updateInfo()
     {
         Planet selectedPlanet = PlanetsController.instance.getPlanetById(UIController.instance.getSelectedIndex());
+        updateNameInfo();
         updateStockInfo(selectedPlanet);
         updateSurplusInfo(selectedPlanet);
         updateNeedsInfo(selectedPlanet);
+    }
+
+    public void updateNameInfo()
+    {
+        nameText.text = resource.ToString();
     }
 
     public void updateStockInfo(Planet planet)
