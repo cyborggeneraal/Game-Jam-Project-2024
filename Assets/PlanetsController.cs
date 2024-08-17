@@ -70,6 +70,7 @@ public class PlanetsController : MonoBehaviour
 
     public void firstPlanet()
     {
+        GameObject planetGameObject = Instantiate(planetPrefab, new Vector3(0.0f, 0.0f, 0.0f), Quaternion.identity);
         Planet planet = getPlanetById(planetGameObject.GetComponent<PlanetGameObject>().getIndex());
         planet.addWorker(5);
         planet.addResource(Resource.Wood, 10);

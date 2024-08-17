@@ -72,7 +72,7 @@ public class UIController : MonoBehaviour
                     if (index != selectedIndex)
                     {
                         Planet planetB = PlanetsController.instance.getPlanetById(index);
-                        Planet planetA = PlanetsController.instance.getPlanetById(index);
+                        Planet planetA = PlanetsController.instance.getPlanetById(selectedIndex);
                         supplyLine supplyLine = planetA.buySupplyLine(Ship.Wooden, planetB);
                         GameObject ship = Instantiate(SupplyLineController.instance.getShipPrefab());
                         ship.transform.Rotate(0.0f, 180.0f, 0.0f, Space.World);
