@@ -9,7 +9,7 @@ public class Controller : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        planeet = new Planet(new Dictionary<Resource, int>(){{Resource.Wood, 2}, {Resource.Coal, 1}}, new Dictionary<Resource, int>(){{Resource.Wood, 1}, {Resource.Coal, 1}}, 10, 1, new Dictionary<Resource, int>(){{Resource.Wood, 2}});
+        planeet = new Planet(new Dictionary<Resource, int>(){{Resource.Wood, 2}, {Resource.Coal, 1}}, new Dictionary<Resource, int>(){{Resource.Wood, 1}, {Resource.Coal, 1}}, 10, new Dictionary<Resource, int>(){{Resource.Wood, 2}});
     }
 
     // Update is called once per frame

@@ -16,7 +16,7 @@ public class Planet
     public int multiplier;
     public int idle_workers;
 
-    public Planet(Dictionary<Resource, int> start_resources, Dictionary<Resource, int> start_needs, int start_workers, int punishment_multiplier, Dictionary<Resource, int> extra_multipliers = null)
+    public Planet(Dictionary<Resource, int> start_resources, Dictionary<Resource, int> start_needs, int start_workers, Dictionary<Resource, int> extra_multipliers = null)
     {
         //Set variables
         resources = start_resources;
@@ -25,7 +25,7 @@ public class Planet
         statisfaction = 100;
         stock = new Dictionary<Resource, int>();
         multipliers = new Dictionary<Resource, int>();
-        punishment = punishment_multiplier;
+        punishment = 1;
         idle_workers = start_workers;
         x = 0;
         y = 0;
@@ -92,6 +92,4 @@ public class Planet
         workers[to] += 1;
 
     }
-
-
 }
