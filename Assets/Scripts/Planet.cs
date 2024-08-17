@@ -71,7 +71,6 @@ public class Planet
             idle_workers -= 1;
             workers[to] += 1;
         }
-            
     }
 
     public void unassignWorker(Resource from)

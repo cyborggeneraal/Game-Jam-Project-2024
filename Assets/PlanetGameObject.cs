@@ -12,6 +12,8 @@ public class PlanetGameObject : MonoBehaviour
     void Start()
     {
         Planet planet = new Planet();
+        planet.addResource(Resource.Wood, 1);
+        planet.addWorker(1);
         planet.assignWorker(Resource.Wood);
         planet.fillStock();
         planet.fillStock();
