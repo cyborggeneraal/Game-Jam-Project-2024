@@ -77,6 +77,7 @@ public class PlanetsController : MonoBehaviour
         planet.addResource(Resource.Coal, 10);
         planet.assignWorker(Resource.Wood);
         planet.assignWorker(Resource.Coal);
+        planetGameObject.GetComponent<PlanetGameObject>().setVariant(1);
     }
 
     public void addWorkerToResource(Resource resource)
