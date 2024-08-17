@@ -10,11 +10,12 @@ public class Planet
     public Dictionary<Resource, int> multipliers;
     public Dictionary<Resource, int> workers;
     public int statisfaction;
-    public int x;
-    public int y;
     public int punishment;
     public int multiplier;
     public int idle_workers;
+    public int x;
+    public int y;
+    public int z;
 
     public Planet(Dictionary<Resource, int> start_resources, Dictionary<Resource, int> start_needs, int start_workers, Dictionary<Resource, int> extra_multipliers = null)
     {
@@ -29,6 +30,7 @@ public class Planet
         idle_workers = start_workers;
         x = 0;
         y = 0;
+        z = 0;
 
         //Automate startup
         foreach(KeyValuePair<Resource, int> resource in resources)
@@ -56,18 +58,14 @@ public class Planet
                 stock[need.Key] = 0;
             }
             else
-            {
                 stock[need.Key] = (stock[need.Key] - need.Value);
-            }
         }
     }
 
     public void Fill_Stock()
     {
         foreach(KeyValuePair<Resource, int> worker in workers)
-        {
             stock[worker.Key] = stock[worker.Key] + (worker.Value * multipliers[worker.Key]);
-        }
     }
 
     public void add_worker(Resource to)
@@ -90,6 +88,5 @@ public class Planet
     {
         workers[from] -= 1;
         workers[to] += 1;
-
     }
 }
