@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+//TODO: coördinaten in de consturctor
 public class Planet
 {
     public Dictionary<Resource, int> resources;
@@ -68,7 +70,7 @@ public class Planet
             stock[worker.Key] = stock[worker.Key] + (worker.Value * multipliers[worker.Key]);
     }
 
-    public void add_worker(Resource to)
+    public void Add_worker(Resource to)
     {
         if(idle_workers > 0 & workers[to] < resources[to])
         {
@@ -78,13 +80,13 @@ public class Planet
             
     }
 
-    public void delete_worker(Resource from)
+    public void Delete_worker(Resource from)
     {
         workers[from] -= 1;
         idle_workers += 1;
     }
         
-    public void resign_worker(Resource from, Resource to)
+    public void Resign_worker(Resource from, Resource to)
     {
         workers[from] -= 1;
         workers[to] += 1;
