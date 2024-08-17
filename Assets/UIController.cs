@@ -13,21 +13,23 @@ public class UIController : MonoBehaviour
     [SerializeField] TMP_Text tooltipText;
 
     [SerializeField] GameObject placeShipMessage;
+    public GameObject deliverShipMessage;
 
     public static UIController instance;
 
-    enum ClickMode
+    public enum ClickMode
     {
         defaultMode,
         shipPlaceMode,
         shipDeliverMode
     }
 
-    ClickMode clickMode = ClickMode.defaultMode;
+    public ClickMode clickMode = ClickMode.defaultMode;
 
     Camera cam;
     bool onUI = false;
     int selectedIndex = -1;
+    public Resource selectedResource = Resource.Wood;
     [SerializeField] LayerMask planets;
 
     bool placeShipMode = false;
@@ -53,6 +55,7 @@ public class UIController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(clickMode);
         if (Input.GetMouseButtonDown(0) && !onUI)
         {
             RaycastHit hit;
@@ -128,7 +131,18 @@ public class UIController : MonoBehaviour
 
     void clickShipDeliver(GameObject clickObject)
     {
-        
+        int index = clickObject.GetComponent<PlanetGameObject>().getIndex();
+        int selectedIndex = UIController.instance.selectedIndex;
+        if (index != selectedIndex)
+        {
+            Planet planetB = PlanetsController.instance.getPlanetById(index);
+            Planet planetA = PlanetsController.instance.getPlanetById(selectedIndex);
+
+            SupplyLineController.instance.addDelivery(planetA, planetB, selectedResource);
+
+            clickMode = ClickMode.defaultMode;
+            UIController.instance.deliverShipMessage.SetActive(false);
+        }
     }
 
     void DeselectAllPlanets()

@@ -81,4 +81,12 @@ public class UIResourceRow : MonoBehaviour
         updateInfo();
         UIController.instance.updateIdleWorkers();
     }
+
+    public void pressDeliverButton()
+    {
+        int index = UIController.instance.getSelectedIndex();
+        UIController.instance.clickMode = UIController.ClickMode.shipDeliverMode;
+        UIController.instance.selectedResource = resource;
+        UIController.instance.deliverShipMessage.SetActive(true);
+    }
 }
