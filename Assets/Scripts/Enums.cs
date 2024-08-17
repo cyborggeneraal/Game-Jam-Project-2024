@@ -11,3 +11,16 @@ public enum Resource
     Iron,
     Oil
 }
+
+public enum Ship
+{
+    Wooden,
+    Iron,
+    Titanium
+}
+
+public enum Line
+{
+    A,
+    B
+}

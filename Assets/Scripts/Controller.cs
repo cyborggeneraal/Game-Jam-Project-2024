@@ -4,19 +4,17 @@ using UnityEngine;
 
 public class Controller : MonoBehaviour
 {
-    public Planet planeet;
+    public Planet planet_a;
+    public Planet planet_b;
+    public supplyLine supplyline;
+    
 
     // Start is called before the first frame update
     void Start()
     {
-        planeet = new Planet(0, 0, 0);
-        planeet.addWorker(10);
-        planeet.addResource(Resource.Wood, 2);
-        planeet.addResource(Resource.Coal, 2);
-        planeet.addNeed(Resource.Wood, 2);
-        planeet.addNeed(Resource.Coal, 1);
-        planeet.addMultiplier(Resource.Wood, 2);
-        planeet.assignWorker(Resource.Coal);
+        planet_a = new Planet(0, 0, 0);
+        planet_b = new Planet(0, 0, 0);
+        supplyline = new supplyLine(planet_a, planet_b, Ship.Wooden);
     }
 
     // Update is called once per frame
@@ -24,22 +22,22 @@ public class Controller : MonoBehaviour
     {        
         if (Input.GetButtonDown("Fire1")) //ctrl l
         {
-            planeet.resignWorker(Resource.Wood, Resource.Coal);
+            supplyline.addDelivery(Resource.Wood, 1, Line.A);
         }
             
         if (Input.GetButtonDown("Fire2")) //alt l
         {
-            planeet.unassignWorker(Resource.Wood);
+            supplyline.addDelivery(Resource.Wood, 1, Line.B);
         }  
         
         if (Input.GetButtonDown("Fire3")) //shift l
         {
-            planeet.assignWorker(Resource.Wood);
+            supplyline.removeDelivery(Resource.Wood, Line.A);
         }
 
         if (Input.GetButtonDown("Jump")) //space
         {
-            Debug.Log("Workers: " + planeet.idle_workers.ToString() + " Wood Workers: " + planeet.workers[Resource.Wood].ToString() + " Coal Workers: " + planeet.workers[Resource.Coal].ToString());
+            Debug.Log("Wood A: " + supplyline.delivery_a[Resource.Wood].ToString() + " Wood B: " + supplyline.delivery_b[Resource.Wood].ToString());
         }
     }
 }
