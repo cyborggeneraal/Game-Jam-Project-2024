@@ -10,6 +10,7 @@ public class Planet
     public Dictionary<Resource, int> stock;
     public Dictionary<Resource, int> multipliers;
     public Dictionary<Resource, int> workers;
+    public (Resource, int) worker_costs;
     public int statisfaction;
     public int punishment;
     public int idle_workers;
@@ -18,16 +19,17 @@ public class Planet
     public Planet(float x, float y, float z)
     {
         resources = new Dictionary<Resource, int>();
-        workers = new Dictionary<Resource, int>();
         needs = new Dictionary<Resource, int>();
-        statisfaction = 100;
         stock = new Dictionary<Resource, int>();
         multipliers = new Dictionary<Resource, int>();
+        workers = new Dictionary<Resource, int>();
+        worker_costs = (Resource.Wood, 2);
+        statisfaction = 100;
         punishment = 1;
         idle_workers = 0;
         position.x = x;
         position.y = y;
-        position.z = z;   
+        position.z = z;  
     }
 
 
@@ -185,9 +187,9 @@ public class Planet
         needs.Add(resource, value);
     }
 
-    public void addWorker(int x)
+    public void addWorker(int n)
     {
-        idle_workers += x;
+        idle_workers += n;
     }
 
     public void addMultiplier(Resource resource, int value)
@@ -196,5 +198,45 @@ public class Planet
             multipliers[resource] = value;
         else
             multipliers.Add(resource, value);
+    }
+
+    //4 buy
+    public void buyWorker(int n)
+    {
+        if(stock[worker_costs.Item1] >= (worker_costs.Item2 * n))
+        {
+            stock[worker_costs.Item1] = stock[worker_costs.Item1] - (worker_costs.Item2 * n);
+            addWorker(n);
+        }       
+    }
+
+    public supplyLine buySupplyLine(Ship ship, Planet planet)
+    {
+        switch(ship)
+        {
+            case Ship.Wooden:
+                if(stock[Resource.Wood] > 2)
+                {
+                    stock[Resource.Wood] -= 2;
+                    return new supplyLine(this, planet, ship);
+                }
+                break;
+            case Ship.Iron:
+                if(stock[Resource.Wood] > 2)
+                {
+                    stock[Resource.Wood] -= 2;
+                    return new supplyLine(this, planet, ship);
+                }
+                break;
+            case Ship.Titanium:
+                if(stock[Resource.Wood] > 2)
+                {
+                    stock[Resource.Wood] -= 2;
+                    return new supplyLine(this, planet, ship);
+                }
+                break;
+        }
+
+        return null;
     }
 }
