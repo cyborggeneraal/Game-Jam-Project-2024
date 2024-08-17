@@ -16,6 +16,15 @@ public class UIController : MonoBehaviour
 
     public static UIController instance;
 
+    enum ClickMode
+    {
+        defaultMode,
+        shipPlaceMode,
+        shipDeliverMode
+    }
+
+    ClickMode clickMode = ClickMode.defaultMode;
+
     Camera cam;
     bool onUI = false;
     int selectedIndex = -1;
@@ -50,39 +59,18 @@ public class UIController : MonoBehaviour
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, planets))
             {
-                if (!placeShipMode)
+                GameObject clickObject = hit.collider.gameObject;
+                switch (clickMode)
                 {
-                    DeselectAllPlanets();
-                    hit.collider.gameObject.GetComponent<OutlineParent>().setOutline(true);
-
-                    int index = hit.collider.gameObject.GetComponent<PlanetGameObject>().getIndex();
-
-                    selectedIndex = index;
-
-                    updateAllInfo();
-                    updateIdleWorkers();
-
-                    panel.SetActive(true);
-                }
-                else
-                {
-                    updateAllInfo();
-                    int index = hit.collider.gameObject.GetComponent<PlanetGameObject>().getIndex();
-                    int selectedIndex = UIController.instance.selectedIndex;
-                    if (index != selectedIndex)
-                    {
-                        Planet planetB = PlanetsController.instance.getPlanetById(index);
-                        Planet planetA = PlanetsController.instance.getPlanetById(selectedIndex);
-                        supplyLine supplyLine = planetA.buySupplyLine(Ship.Wooden, planetB);
-                        GameObject ship = Instantiate(SupplyLineController.instance.getShipPrefab());
-                        ship.transform.Rotate(0.0f, 180.0f, 0.0f, Space.World);
-                        SupplyLineController.instance.addSupplyLine(supplyLine, ship.GetComponent<ShipMovement>());
-                        Transform planetATransform = PlanetsController.instance.getPlanetGameObjectById(selectedIndex).gameObject.transform;
-                        Transform planetBTransform = PlanetsController.instance.getPlanetGameObjectById(index).gameObject.transform;
-                        ship.GetComponent<ShipMovement>().setPlanets(planetATransform, planetBTransform);
-                        placeShipMessage.SetActive(false);
-                        placeShipMode = false;
-                    }
+                    case ClickMode.defaultMode:
+                        clickDefault(clickObject);
+                        break;
+                    case ClickMode.shipPlaceMode:
+                        clickShipPlace(clickObject);
+                        break;
+                    case ClickMode.shipDeliverMode:
+                        clickShipDeliver(clickObject);
+                        break;
                 }
             }
             else
@@ -91,7 +79,7 @@ public class UIController : MonoBehaviour
                 panel.SetActive(false);
                 selectedIndex = -1;
                 placeShipMessage.SetActive(false);
-                placeShipMode = false;
+                clickMode = ClickMode.defaultMode;
             }
         }
 
@@ -100,6 +88,47 @@ public class UIController : MonoBehaviour
             tooltipPanel.transform.position = Input.mousePosition;
         }
 
+    }
+
+    void clickDefault(GameObject clickObject)
+    {
+        DeselectAllPlanets();
+        clickObject.GetComponent<OutlineParent>().setOutline(true);
+
+        int index = clickObject.GetComponent<PlanetGameObject>().getIndex();
+
+        selectedIndex = index;
+
+        updateAllInfo();
+        updateIdleWorkers();
+
+        panel.SetActive(true);
+    }
+
+    void clickShipPlace(GameObject clickObject)
+    {
+        updateAllInfo();
+        int index = clickObject.GetComponent<PlanetGameObject>().getIndex();
+        int selectedIndex = UIController.instance.selectedIndex;
+        if (index != selectedIndex)
+        {
+            Planet planetB = PlanetsController.instance.getPlanetById(index);
+            Planet planetA = PlanetsController.instance.getPlanetById(selectedIndex);
+            supplyLine supplyLine = planetA.buySupplyLine(Ship.Wooden, planetB);
+            GameObject ship = Instantiate(SupplyLineController.instance.getShipPrefab());
+            ship.transform.Rotate(0.0f, 180.0f, 0.0f, Space.World);
+            SupplyLineController.instance.addSupplyLine(supplyLine, ship.GetComponent<ShipMovement>());
+            Transform planetATransform = PlanetsController.instance.getPlanetGameObjectById(selectedIndex).gameObject.transform;
+            Transform planetBTransform = PlanetsController.instance.getPlanetGameObjectById(index).gameObject.transform;
+            ship.GetComponent<ShipMovement>().setPlanets(planetATransform, planetBTransform);
+            placeShipMessage.SetActive(false);
+            clickMode = ClickMode.defaultMode;
+        }
+    }
+
+    void clickShipDeliver(GameObject clickObject)
+    {
+        
     }
 
     void DeselectAllPlanets()
@@ -163,7 +192,7 @@ public class UIController : MonoBehaviour
         if (selectedPlanet.getStock(Resource.Wood) >= 10 && selectedPlanet.getStock(Resource.Coal) >= 10)
         {
             placeShipMessage.SetActive(true);
-            placeShipMode = true;
+            clickMode = ClickMode.shipPlaceMode;
         }
         else
         {
