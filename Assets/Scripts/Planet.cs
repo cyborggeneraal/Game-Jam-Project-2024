@@ -19,17 +19,17 @@ public class Planet
     public int y;
     public int z;
 
-    public Planet(Dictionary<Resource, int> start_resources, Dictionary<Resource, int> start_needs, int start_workers, Dictionary<Resource, int> extra_multipliers = null)
+    public Planet()
     {
         //Set variables
-        resources = start_resources;
+        resources = new Dictionary<Resource, int>();
         workers = new Dictionary<Resource, int>();
-        needs = start_needs;
+        needs = new Dictionary<Resource, int>();
         statisfaction = 100;
         stock = new Dictionary<Resource, int>();
         multipliers = new Dictionary<Resource, int>();
         punishment = 1;
-        idle_workers = start_workers;
+        idle_workers = 0;
         x = 0;
         y = 0;
         z = 0;
@@ -37,20 +37,14 @@ public class Planet
         //Automate startup
         foreach(KeyValuePair<Resource, int> resource in resources)
         {   
-            //Set stock and workers to zero
+            //Set stock and workers to zero and multipliers to 1
             stock.Add(resource.Key, 0);
             workers.Add(resource.Key, 0);
-
-            //Add relevant multipliers
-            if(extra_multipliers != null & extra_multipliers.ContainsKey(resource.Key))
-                multipliers[resource.Key] = extra_multipliers[resource.Key];
-            else
-                multipliers.Add(resource.Key, 1);
-            
+            multipliers.Add(resource.Key, 1);
         }
     }
 
-    public void Fill_Needs()
+    public void fillNeeds()
     {
         foreach(KeyValuePair<Resource, int> need in needs)
         {
@@ -64,13 +58,13 @@ public class Planet
         }
     }
 
-    public void Fill_Stock()
+    public void fillStock()
     {
         foreach(KeyValuePair<Resource, int> worker in workers)
             stock[worker.Key] = stock[worker.Key] + (worker.Value * multipliers[worker.Key]);
     }
 
-    public void Add_worker(Resource to)
+    public void assignWorker(Resource to)
     {
         if(idle_workers > 0 & workers[to] < resources[to])
         {
@@ -80,13 +74,13 @@ public class Planet
             
     }
 
-    public void Delete_worker(Resource from)
+    public void unassignWorker(Resource from)
     {
         workers[from] -= 1;
         idle_workers += 1;
     }
         
-    public void Resign_worker(Resource from, Resource to)
+    public void resignWorker(Resource from, Resource to)
     {
         workers[from] -= 1;
         workers[to] += 1;
@@ -126,4 +120,25 @@ public class Planet
     {
         return workers.ContainsKey(resource) ? workers[resource] : 0;
     }
+
+    public void addResource(Resource resource, int value)
+    {
+        resources.Add(resource, value);
+    }
+
+    public void addNeeds(Resource resource, int value)
+    {
+        needs.Add(resource, value);
+    }
+
+    public void addWorker(int x)
+    {
+        idle_workers += x;
+    }
+
+    public void addMultiplier(Resource resource, int value)
+    {
+        multipliers.Add(resource, value);
+    }
+        
 }
