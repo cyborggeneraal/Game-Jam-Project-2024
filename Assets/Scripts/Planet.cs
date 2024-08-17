@@ -42,10 +42,15 @@ public class Planet
             workers.Add(resource.Key, 0);
 
             //Add relevant multipliers
-            if(extra_multipliers != null & extra_multipliers.ContainsKey(resource.Key))
-                multipliers[resource.Key] = extra_multipliers[resource.Key];
+            if(extra_multipliers != null )
+            {
+                if(extra_multipliers.ContainsKey(resource.Key))
+                    multipliers[resource.Key] = extra_multipliers[resource.Key];
+            }   
             else
                 multipliers.Add(resource.Key, 1);
+            
+                
             
         }
     }
