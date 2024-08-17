@@ -8,10 +8,26 @@ public class UIController : MonoBehaviour
     [SerializeField] GameObject panel;
     [SerializeField] List<UIResourceRow> UIRows;
     [SerializeField] List<Resource> UIResources;
+    [SerializeField] TMP_Text idleWorkersCount;
+
+    public static UIController instance;
 
     Camera cam;
     bool onUI = false;
+    int selectedIndex = -1;
     [SerializeField] LayerMask planets;
+
+    private void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            instance = this;
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -34,14 +50,13 @@ public class UIController : MonoBehaviour
                 int index = hit.collider.gameObject.GetComponent<PlanetGameObject>().getIndex();
                 Planet planet = PlanetsController.instance.getPlanetById(index);
 
-                for (int i = 0; i < UIRows.Count; i++)
+                selectedIndex = index;
+
+                foreach (UIResourceRow UIRow in UIRows)
                 {
-                    UIResourceRow UIRow = UIRows[i];
-                    Resource resource = UIResources[i];
-                    UIRow.updateStockInfo(planet.getStock(resource));
-                    UIRow.updateSurplusInfo(planet.getSurplus(resource), planet.getWorkers(resource));
-                    UIRow.updateNeedsInfo(planet.getNeeds(resource));
+                    UIRow.updateInfo();
                 }
+                updateIdleWorkers();
 
                 panel.SetActive(true);
             }
@@ -49,6 +64,7 @@ public class UIController : MonoBehaviour
             {
                 DeselectAllPlanets();
                 panel.SetActive(false);
+                selectedIndex = -1;
             }
         }
     }
@@ -64,5 +80,16 @@ public class UIController : MonoBehaviour
     public void setOnUI(bool onUI)
     {
         this.onUI = onUI;
+    }
+
+    public int getSelectedIndex()
+    {
+        return selectedIndex;
+    }
+
+    public void updateIdleWorkers()
+    {
+        Planet planet = PlanetsController.instance.getPlanetById(selectedIndex);
+        idleWorkersCount.text = planet.idle_workers.ToString();
     }
 }

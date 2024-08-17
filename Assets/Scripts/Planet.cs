@@ -76,14 +76,16 @@ public class Planet
     }
 
     public void assignWorker(Resource to)
-    {   
-        if(idle_workers > 0)
+    {
+        if (idle_workers > 0)
         {
             addWorkersToResource(to, 1);
             idle_workers -= 1;
         }
         else
-            Debug.LogError("There are no workers for this resource");
+        {
+            throw new System.ArgumentException("There are no workers for this resource");
+        }
         
     }
 

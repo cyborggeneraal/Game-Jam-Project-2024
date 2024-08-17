@@ -12,6 +12,8 @@ public class UIResourceRow : MonoBehaviour
     [SerializeField] Button plusWorkerButton;
     [SerializeField] Button minWorkerButton;
 
+    [SerializeField] Resource resource;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,19 +26,27 @@ public class UIResourceRow : MonoBehaviour
 
     }
 
-    public void updateStockInfo(int stock)
+    public void updateInfo()
     {
-        stockText.text = stock.ToString();
+        Planet selectedPlanet = PlanetsController.instance.getPlanetById(UIController.instance.getSelectedIndex());
+        updateStockInfo(selectedPlanet);
+        updateSurplusInfo(selectedPlanet);
+        updateNeedsInfo(selectedPlanet);
     }
 
-    public void updateSurplusInfo(int surplus, int workers)
+    public void updateStockInfo(Planet planet)
     {
-        surplusText.text = "+" + surplus.ToString() + "  (" + workers.ToString() + ")";
+        stockText.text = planet.getStock(resource).ToString();
     }
 
-    public void updateNeedsInfo(int needs)
+    public void updateSurplusInfo(Planet planet)
     {
-        needsText.text = "-" + needs.ToString();
+        surplusText.text = "+" + planet.getSurplus(resource).ToString() + "  (" + planet.getWorkers(resource).ToString() + ")";
+    }
+
+    public void updateNeedsInfo(Planet planet)
+    {
+        needsText.text = "-" + planet.getNeeds(resource).ToString();
     }
 
     public Button getPlusButton()
@@ -47,5 +57,19 @@ public class UIResourceRow : MonoBehaviour
     public Button getMinButton()
     {
         return minWorkerButton;
+    }
+
+    public void pressPlusButton()
+    {
+        PlanetsController.instance.getPlanetById(UIController.instance.getSelectedIndex()).assignWorker(resource);
+        updateInfo();
+        UIController.instance.updateIdleWorkers();
+    }
+
+    public void pressMinButton()
+    {
+        PlanetsController.instance.getPlanetById(UIController.instance.getSelectedIndex()).unassignWorker(resource);
+        updateInfo();
+        UIController.instance.updateIdleWorkers();
     }
 }
