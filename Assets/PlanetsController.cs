@@ -67,4 +67,9 @@ public class PlanetsController : MonoBehaviour
     {
         GameObject planetGameObject = Instantiate(planet, Vector3.zero, Quaternion.identity);
     }
+
+    public void addWorkerToResource(Resource resource)
+    {
+        getPlanetById(UIController.instance.getSelectedIndex()).assignWorker(resource);
+    }
 }
