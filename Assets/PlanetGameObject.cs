@@ -11,7 +11,7 @@ public class PlanetGameObject : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Planet planet = new Planet();
+        Planet planet = new Planet(0, 0, 0);
         planet.assignWorker(Resource.Wood);
         planet.fillStock();
         planet.fillStock();

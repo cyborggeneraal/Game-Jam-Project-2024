@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-//TODO: coördinaten in de consturctor
 public class Planet
 {
     public Dictionary<Resource, int> resources;
@@ -15,13 +14,10 @@ public class Planet
     public int punishment;
     public int multiplier;
     public int idle_workers;
-    public int x;
-    public int y;
-    public int z;
+    public Vector3 position;
 
-    public Planet()
+    public Planet(float x, float y, float z)
     {
-        //Set variables
         resources = new Dictionary<Resource, int>();
         workers = new Dictionary<Resource, int>();
         needs = new Dictionary<Resource, int>();
@@ -30,20 +26,12 @@ public class Planet
         multipliers = new Dictionary<Resource, int>();
         punishment = 1;
         idle_workers = 0;
-        x = 0;
-        y = 0;
-        z = 0;
-
-        //Automate startup
-        foreach(KeyValuePair<Resource, int> resource in resources)
-        {   
-            //Set stock and workers to zero and multipliers to 1
-            stock.Add(resource.Key, 0);
-            workers.Add(resource.Key, 0);
-            multipliers.Add(resource.Key, 1);
-        }
+        position.x = x;
+        position.y = y;
+        position.z = z;   
     }
 
+    //Fill
     public void fillNeeds()
     {
         foreach(KeyValuePair<Resource, int> need in needs)
@@ -61,31 +49,57 @@ public class Planet
     public void fillStock()
     {
         foreach(KeyValuePair<Resource, int> worker in workers)
-            stock[worker.Key] = stock[worker.Key] + (worker.Value * multipliers[worker.Key]);
+            if(stock.ContainsKey(worker.Key))
+                stock[worker.Key] = stock[worker.Key] + (worker.Value * multipliers[worker.Key]);
+
+            else
+                stock.Add(worker.Key, (worker.Value * 1));
+    }
+
+    //Assign
+    public void removeWorkersFromResource(Resource from, int n)
+    {
+        if(getWorkers(from) >= n)
+        {
+            workers[from] -= n;
+        }
+        else
+            Debug.LogError("There are no workers for this resource");
+    }
+
+    public void addWorkersToResource(Resource to, int n)
+    {
+        if(workers.ContainsKey(to))
+            workers[to] += n;
+        else
+            workers.Add(to, n);
     }
 
     public void assignWorker(Resource to)
-    {
-        if(idle_workers > 0 & workers[to] < resources[to])
+    {   
+        if(idle_workers > 0)
         {
+            addWorkersToResource(to, 1);
             idle_workers -= 1;
-            workers[to] += 1;
         }
-            
+        else
+            Debug.LogError("There are no workers for this resource");
+        
     }
 
     public void unassignWorker(Resource from)
-    {
-        workers[from] -= 1;
+    {   
+        removeWorkersFromResource(from, 1);
         idle_workers += 1;
     }
         
     public void resignWorker(Resource from, Resource to)
     {
-        workers[from] -= 1;
-        workers[to] += 1;
+        removeWorkersFromResource(from, 1);
+        addWorkersToResource(to, 1);
     }
 
+    //Get
     public int getStock(Resource resource)
     {
         if (stock.ContainsKey(resource))
@@ -121,9 +135,11 @@ public class Planet
         return workers.ContainsKey(resource) ? workers[resource] : 0;
     }
 
+    //Add
     public void addResource(Resource resource, int value)
     {
         resources.Add(resource, value);
+        multipliers.Add(resource, 1);
     }
 
     public void addNeeds(Resource resource, int value)
@@ -138,7 +154,10 @@ public class Planet
 
     public void addMultiplier(Resource resource, int value)
     {
-        multipliers.Add(resource, value);
+        if(multipliers.ContainsKey(resource))
+            multipliers[resource] = value;
+        else
+            multipliers.Add(resource, value);
     }
         
 }

@@ -9,7 +9,13 @@ public class Controller : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        planeet = new Planet();
+        planeet = new Planet(0, 0, 0);
+        planeet.addWorker(1);
+        planeet.addResource(Resource.Wood, 2);
+        planeet.addNeeds(Resource.Wood, 1);
+        planeet.assignWorker(Resource.Wood);
+        planeet.fillStock();
+        planeet.addMultiplier(Resource.Wood, 2);
     }
 
     // Update is called once per frame
@@ -17,7 +23,7 @@ public class Controller : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire1"))
         {
-            Debug.Log("Wood: " + planeet.stock[Resource.Wood].ToString() + " Coal: " + planeet.stock[Resource.Coal].ToString() + " Statisfaction: " + planeet.statisfaction.ToString() + " Workers: " + planeet.idle_workers.ToString());
+            Debug.Log("Wood: " + planeet.stock[Resource.Wood].ToString() + " Statisfaction: " + planeet.statisfaction.ToString() + " Workers: " + planeet.idle_workers.ToString() + " Wood Workers: " + planeet.workers[Resource.Wood].ToString());
         }
             
         if (Input.GetButtonDown("Fire2"))
