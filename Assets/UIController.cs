@@ -10,6 +10,7 @@ public class UIController : MonoBehaviour
     [SerializeField] List<Resource> UIResources;
 
     Camera cam;
+    bool onUI = false;
     [SerializeField] LayerMask planets;
 
     // Start is called before the first frame update
@@ -21,7 +22,7 @@ public class UIController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !onUI)
         {
             RaycastHit hit;
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
@@ -58,5 +59,10 @@ public class UIController : MonoBehaviour
         {
             planetGameObject.gameObject.GetComponent<Outline>().enabled = false;
         }
+    }
+
+    public void setOnUI(bool onUI)
+    {
+        this.onUI = onUI;
     }
 }
