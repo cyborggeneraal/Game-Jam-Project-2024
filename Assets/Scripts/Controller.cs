@@ -12,7 +12,7 @@ public class Controller : MonoBehaviour
         planeet = new Planet(0, 0, 0);
         planeet.addWorker(10);
         planeet.addResource(Resource.Wood, 2);
-        planeet.addResource(Resource.Coal, 1);
+        planeet.addResource(Resource.Coal, 2);
         planeet.addNeed(Resource.Wood, 2);
         planeet.addNeed(Resource.Coal, 1);
         planeet.addMultiplier(Resource.Wood, 2);
@@ -24,12 +24,12 @@ public class Controller : MonoBehaviour
     {        
         if (Input.GetButtonDown("Fire1")) //ctrl l
         {
-            planeet.fillNeeds();
+            planeet.resignWorker(Resource.Wood, Resource.Coal);
         }
             
         if (Input.GetButtonDown("Fire2")) //alt l
         {
-            planeet.fillStock();
+            planeet.unassignWorker(Resource.Wood);
         }  
         
         if (Input.GetButtonDown("Fire3")) //shift l
@@ -39,7 +39,7 @@ public class Controller : MonoBehaviour
 
         if (Input.GetButtonDown("Jump")) //space
         {
-            Debug.Log("Wood: " + planeet.stock[Resource.Wood].ToString() + " Coal: " + planeet.stock[Resource.Coal].ToString() + " Statisfaction: " + planeet.statisfaction.ToString() + " Workers: " + planeet.idle_workers.ToString() + " Wood Workers: " + planeet.workers[Resource.Wood].ToString() + " Coal Workers: " + planeet.workers[Resource.Coal].ToString());
+            Debug.Log("Workers: " + planeet.idle_workers.ToString() + " Wood Workers: " + planeet.workers[Resource.Wood].ToString() + " Coal Workers: " + planeet.workers[Resource.Coal].ToString());
         }
     }
 }
