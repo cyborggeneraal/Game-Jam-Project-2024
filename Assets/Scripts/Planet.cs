@@ -213,8 +213,6 @@ public class Planet
     {
         if(stock.ContainsKey(resource))
             stock[resource] = Math.Max(stock[resource] - value, 0);
-        else
-            throw new System.ArgumentException("This resource does not exist");
     }
 
     //4 buy
@@ -234,7 +232,9 @@ public class Planet
             case Ship.Wooden:
                 if(getStock(Resource.Wood) >= 10 && getStock(Resource.Coal) >= 10)
                 {
+                    Debug.Log(getStock(Resource.Wood));
                     stock[Resource.Wood] -= 10;
+                    Debug.Log(getStock(Resource.Wood));
                     stock[Resource.Coal] -= 10;
                     UIController.instance.updateAllInfo();
                     return new supplyLine(this, planet, ship);

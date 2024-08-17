@@ -16,7 +16,7 @@ public class ShipMovement : MonoBehaviour
     void Start()
     {
         float angle = Quaternion.Angle(Quaternion.identity, Quaternion.LookRotation(planetB.position - planetA.position));
-        transform.eulerAngles = new Vector3(-90.0f, -angle, 0.0f);
+        transform.eulerAngles = new Vector3(-90.0f, angle, 0.0f);
     }
 
     // Update is called once per frame
