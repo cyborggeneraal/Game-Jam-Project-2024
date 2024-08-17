@@ -14,8 +14,9 @@ public class Planet
     public int y;
     public int punishment;
     public int multiplier;
+    public int idle_workers;
 
-    public Planet(Dictionary<Resource, int> start_resources, Dictionary<Resource, int> start_needs, int punishment_multiplier, Dictionary<Resource, int> extra_multipliers = null)
+    public Planet(Dictionary<Resource, int> start_resources, Dictionary<Resource, int> start_needs, int start_workers, int punishment_multiplier, Dictionary<Resource, int> extra_multipliers = null)
     {
         //Set variables
         resources = start_resources;
@@ -25,6 +26,7 @@ public class Planet
         stock = new Dictionary<Resource, int>();
         multipliers = new Dictionary<Resource, int>();
         punishment = punishment_multiplier;
+        idle_workers = start_workers;
         x = 0;
         y = 0;
 
@@ -62,27 +64,33 @@ public class Planet
 
     public void Fill_Stock()
     {
-        foreach(KeyValuePair<Resource, int> resource in resources)
+        foreach(KeyValuePair<Resource, int> worker in workers)
         {
-            stock[resource.Key] = stock[workers.Key] + (workers.Value * multipliers[resource.Key]);
+            stock[worker.Key] = stock[worker.Key] + (worker.Value * multipliers[worker.Key]);
         }
     }
 
-    public void add_worker(Resource to, int Idle)
+    public void add_worker(Resource to)
     {
-        resources[to] += 1;
-        Idle -= 1;
+        if(idle_workers > 0 & workers[to] < resources[to])
+        {
+            idle_workers -= 1;
+            workers[to] += 1;
+        }
+            
     }
 
     public void delete_worker(Resource from)
     {
-        resources[from] -= 1;
+        workers[from] -= 1;
+        idle_workers += 1;
     }
         
     public void resign_worker(Resource from, Resource to)
     {
-        resources[from] -= 1;
-        resources[to] += 1;
+        workers[from] -= 1;
+        workers[to] += 1;
+
     }
 
 
