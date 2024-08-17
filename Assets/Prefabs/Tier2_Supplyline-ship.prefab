@@ -28,7 +28,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0.01659, y: 0.0856, z: -0.0039}
-  m_LocalScale: {x: 0.1444, y: 0.1444, z: 0.1444}
+  m_LocalScale: {x: 0.02, y: 0.02, z: 0.07}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6586069725772934849}
@@ -116,7 +116,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 4
+      scalar: 0.7
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -4858,7 +4858,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -0.016, y: 0.0856, z: -0.0039}
-  m_LocalScale: {x: 0.1444, y: 0.1444, z: 0.1444}
+  m_LocalScale: {x: 0.02, y: 0.02, z: 0.07}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6586069725772934849}
@@ -4946,7 +4946,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 4
+      scalar: 0.7
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -9688,7 +9688,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0.0004, y: 0.0856, z: -0.0055}
-  m_LocalScale: {x: 0.24854128, y: 0.24854128, z: 0.24854128}
+  m_LocalScale: {x: 0.04, y: 0.04, z: 0.07}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6586069725772934849}
@@ -9776,7 +9776,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 4
+      scalar: 0.7
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -14552,7 +14552,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: bc2500d38bf582e408f39400c95105c7, type: 3}
       propertyPath: m_Name
-      value: Tier1_Supplyline-ship
+      value: Tier2_Supplyline-ship
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
