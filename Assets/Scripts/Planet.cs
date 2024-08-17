@@ -121,13 +121,18 @@ public class Planet
     public void addWorkersToResource(Resource to, int n)
     {
         if(resources.ContainsKey(to))
-            if(workers.ContainsKey(to) & resources[to] > 0)
-                if(getWorkers(to) < resources[to])
-                    workers[to] += n;
-                else
-                    throw new System.ArgumentException("This resource has reached it's limit");
-            else
+        {
+            if(getWorkers(to) < resources[to] & getWorkers(to) > 0)
+            {
+                workers[to] += n;
+            }
+            else if(resources[to] > 0)
+            {
                 workers.Add(to, n);
+            } 
+            else
+                throw new System.ArgumentException("This resource has reached it's limit");
+        }            
         else
             throw new System.ArgumentException("This resource does not exist");
     }
@@ -135,8 +140,16 @@ public class Planet
     //2.2 Assign
     public void assignWorker(Resource to)
     {   
-        addWorkersToResource(to, 1);
-        removeWorkersFromIdle(1);   
+        if(resources.ContainsKey(to))
+            if(getWorkers(to) < resources[to] & idle_workers > 0)
+            {
+                addWorkersToResource(to, 1);
+                removeWorkersFromIdle(1);
+            }   
+            else
+                throw new System.ArgumentException("This resource has reached it's limit");
+        else
+            throw new System.ArgumentException("This resource does not exist");   
     }
 
     public void unassignWorker(Resource from)
@@ -146,9 +159,17 @@ public class Planet
     }
         
     public void resignWorker(Resource from, Resource to)
-    {
-        removeWorkersFromResource(from, 1);
-        addWorkersToResource(to, 1);
+    {   
+        if(resources.ContainsKey(from) & resources.ContainsKey(to))
+            if(0 < resources[from] & getWorkers(to) < resources[to])
+            {
+                removeWorkersFromResource(from, 1);
+                addWorkersToResource(to, 1);
+            }   
+            else
+                throw new System.ArgumentException("This resource has reached it's limit");
+        else
+            throw new System.ArgumentException("This resource does not exist");
     }
 
     //3 properties
