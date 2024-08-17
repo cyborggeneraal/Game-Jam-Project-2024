@@ -64,7 +64,7 @@ public class Planet
     {
         foreach(KeyValuePair<Resource, int> resource in resources)
         {
-            stock[resource.Key] = stock[workers.Key] + (workers.Value * multipliers[resource.Key]);
+            //stock[resource.Key] = stock[workers.Key] + (workers.Value * multipliers[resource.Key]);
         }
     }
 

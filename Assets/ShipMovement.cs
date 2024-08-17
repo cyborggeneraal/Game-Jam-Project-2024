@@ -27,20 +27,19 @@ public class ShipMovement : MonoBehaviour
     private void FixedUpdate()
     {
         t += Time.fixedDeltaTime * speed * dir / Vector3.Distance(planetA.position, planetB.position);
-        Debug.Log(t);
         while (t < 0.0f || t > 1.0f)
         {
             if (t < 0.0f)
             {
                 t *= -1;
                 dir = 1;
-                transform.rotation *= Quaternion.Euler(0.0f, 180.0f, 0.0f);
+                transform.rotation *= Quaternion.Euler(0.0f, 0.0f, 180.0f);
             }
             if (t > 1.0f)
             {
                 t = 2 - t;
                 dir = -1;
-                transform.rotation *= Quaternion.Euler(0.0f, -180.0f, 0.0f);
+                transform.rotation *= Quaternion.Euler(0.0f, 0.0f, -180.0f);
             }
         }
         transform.position = Vector3.Lerp(planetA.position, planetB.position, t);
