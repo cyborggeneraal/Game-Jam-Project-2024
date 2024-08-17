@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 
 public class Planet
@@ -196,6 +197,22 @@ public class Planet
             multipliers[resource] = value;
         else
             multipliers.Add(resource, value);
+    }
+
+    public void addStock(Resource resource, int value)
+    {
+        if(stock.ContainsKey(resource))
+            stock[resource] += value;
+        else
+            stock.Add(resource, value);
+    }
+
+    public void removeStock(Resource resource, int value)
+    {
+        if(stock.ContainsKey(resource))
+            stock[resource] = Math.Max(stock[resource] - value, 0);
+        else
+            throw new System.ArgumentException("This resource does not exist");
     }
 
     //4 buy

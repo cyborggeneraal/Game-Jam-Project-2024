@@ -15,6 +15,10 @@ public class Controller : MonoBehaviour
         planet_a = new Planet(0, 0, 0);
         planet_b = new Planet(0, 0, 0);
         supplyline = new supplyLine(planet_a, planet_b, Ship.Wooden);
+        supplyline.addDelivery(Resource.Wood, 1, Line.A);
+        supplyline.addDelivery(Resource.Wood, 2, Line.B);
+        planet_a.addStock(Resource.Wood, 1);
+        planet_b.addStock(Resource.Wood, 1);
     }
 
     // Update is called once per frame
@@ -22,22 +26,22 @@ public class Controller : MonoBehaviour
     {        
         if (Input.GetButtonDown("Fire1")) //ctrl l
         {
-            supplyline.addDelivery(Resource.Wood, 1, Line.A);
+            supplyline.addStockPlanet(Line.A);
         }
             
         if (Input.GetButtonDown("Fire2")) //alt l
         {
-            supplyline.addDelivery(Resource.Wood, 1, Line.B);
+            supplyline.addStockPlanet(Line.B);
         }  
         
         if (Input.GetButtonDown("Fire3")) //shift l
         {
-            supplyline.removeDelivery(Resource.Wood, Line.A);
+            supplyline.removeStockPlanet(Line.A);
         }
 
         if (Input.GetButtonDown("Jump")) //space
         {
-            Debug.Log("Wood A: " + supplyline.delivery_a[Resource.Wood].ToString() + " Wood B: " + supplyline.delivery_b[Resource.Wood].ToString());
+            Debug.Log("Wood A: " + planet_a.stock[Resource.Wood].ToString() + " Wood B: " + planet_b.stock[Resource.Wood].ToString());
         }
     }
 }
