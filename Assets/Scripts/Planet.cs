@@ -91,4 +91,39 @@ public class Planet
         workers[from] -= 1;
         workers[to] += 1;
     }
+
+    public int getStock(Resource resource)
+    {
+        if (stock.ContainsKey(resource))
+        {
+            return stock[resource];
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    public int getSurplus(Resource resource)
+    {
+        if (workers.ContainsKey(resource))
+        {
+            int multiplier = multipliers.ContainsKey(resource) ? multipliers[resource] : 1;
+            return workers[resource] * multiplier;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+    
+    public int getNeeds(Resource resource)
+    {
+        return needs.ContainsKey(resource) ? needs[resource] : 0;
+    }
+
+    public int getWorkers(Resource resource)
+    {
+        return workers.ContainsKey(resource) ? workers[resource] : 0;
+    }
 }
