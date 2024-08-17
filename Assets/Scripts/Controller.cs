@@ -22,7 +22,7 @@ public class Controller : MonoBehaviour
             
         if (Input.GetButtonDown("Fire2"))
         {
-            planeet.add_worker(Resource.Wood);
+            planeet.Add_worker(Resource.Wood);
         }  
         
         if (Input.GetButtonDown("Fire3"))
