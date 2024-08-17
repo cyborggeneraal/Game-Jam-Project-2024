@@ -11,7 +11,9 @@ public class PlanetGameObject : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Planet planet = new Planet(new Dictionary<Resource, int>(), new Dictionary<Resource,int>(), 1);
+        Planet planet = new Planet(new Dictionary<Resource, int>(){{ Resource.Wood, 1 }}, new Dictionary<Resource, int>() { { Resource.Wood, 1} }, 1, new Dictionary<Resource, int>() { {Resource.Wood, 1 } });
+        planet.Add_worker(Resource.Wood);
+        planet.Fill_Stock();
         planet.Fill_Stock();
         index = PlanetsController.instance.addPlanet(planet);
     }

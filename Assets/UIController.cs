@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class UIController : MonoBehaviour
 {
     [SerializeField] GameObject panel;
-    [SerializeField] TextMesh woodCount;
+    [SerializeField] TMP_Text woodCount;
 
     Camera cam;
     [SerializeField] LayerMask planets;
