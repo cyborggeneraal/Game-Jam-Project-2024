@@ -260,7 +260,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   countdown: 5
   unlockedResources: 
-  speedNeed: 9
+  speedNeed: 15
 --- !u!114 &85691008
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -598,6 +598,7 @@ MonoBehaviour:
   placeShipMessage: {fileID: 44054123}
   deliverShipMessage: {fileID: 476234148}
   clickMode: 0
+  onUI: 0
   selectedIndex: -1
   selectedResource: 0
   planets:
@@ -1165,7 +1166,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &476234149
 MonoBehaviour:
   m_ObjectHideFlags: 0

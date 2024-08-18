@@ -7,6 +7,7 @@ public class PlanetGameObject : MonoBehaviour
     [SerializeField] Planet planet;
     [SerializeField] GameObject[] planetVariants;
     [SerializeField] GameObject fog;
+    public satisfactionController satisfactionUI;
 
     int index;
 
@@ -41,5 +42,11 @@ public class PlanetGameObject : MonoBehaviour
     public void turnOffFog()
     {
         fog.SetActive(false);
+    }
+
+    public void turnonSatisfaction()
+    {
+        Debug.Log("hi");
+        satisfactionUI.gameObject.SetActive(true);
     }
 }
