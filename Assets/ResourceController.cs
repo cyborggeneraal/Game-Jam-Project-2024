@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ResourceController : MonoBehaviour
 {
@@ -36,16 +37,17 @@ public class ResourceController : MonoBehaviour
         countdownT += Time.fixedDeltaTime;
         if (countdownT >= countdown)
         {
-            foreach (Planet planet in PlanetsController.instance.getAllPlanets())
-            {
-                planet.fillStock();
-                planet.fillNeeds();
-            }
             foreach (supplyLine line in SupplyLineController.instance.getAllSupplyLines())
             {
                 line.addStockPlanet();
                 line.removeStockPlanet();
             }
+            foreach (Planet planet in PlanetsController.instance.getAllPlanets())
+            {
+                planet.fillStock();
+                planet.fillNeeds();
+            }
+            checkGameOver();
             updateAllNeeds();
             foreach (PlanetGameObject planetObject in PlanetsController.instance.getAllPlanetGameObjects())
             {
@@ -132,6 +134,24 @@ public class ResourceController : MonoBehaviour
         }
         return result;
 
+    }
+
+    void checkGameOver()
+    {
+        foreach (Planet planet in PlanetsController.instance.getAllPlanets())
+        {
+            if (planet.statisfaction <= 0)
+            {
+                gameOver();
+                return;
+            }
+        }
+    }
+
+    void gameOver()
+    {
+        gameOverController.instance.gameObject.SetActive(true);
+        SceneManager.LoadScene("MainMenu");
     }
 
 }

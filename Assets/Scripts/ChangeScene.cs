@@ -7,12 +7,12 @@ public class ChangeScene : MonoBehaviour
 {
     public void GoToMainMenu()
     {
-        SceneManager.LoadScene("Main Menu");
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void CloseGameOver()
     {
-        Object.Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 
     public void QuitGame()

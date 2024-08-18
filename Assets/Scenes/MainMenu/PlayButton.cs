@@ -3,10 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MainManu : MonoBehaviour
+public class PlayButton : MonoBehaviour
 {
-    public void PlayButton()
+    public void playButton()
     {
         SceneManager.LoadScene("SampleScene");
+    }
+
+    public void howtoplayButton ()
+    {
+        SceneManager.LoadScene("How To Play");
     }
 }
