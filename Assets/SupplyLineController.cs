@@ -41,6 +41,13 @@ public class SupplyLineController : MonoBehaviour
         int index = supplyLines.Count;
         supplyLines.Add(ssupplyLine);
         supplyLineGameObjects.Add(ship);
+        if (!ssupplyLine.planet_b.isDiscovered())
+        {
+            ssupplyLine.planet_b.addWorker(3);
+            ssupplyLine.planet_b.setDiscovered();
+            ResourceController.instance.updateUnlockedResources();
+            UIController.instance.updateAllInfo();
+        }
         return index;
 
     }

@@ -52,7 +52,7 @@ public class UIResourceRow : MonoBehaviour
 
     public void updateSurplusInfo(Planet planet)
     {
-        surplusText.text = "+" + planet.getSurplus(resource).ToString() + "  (" + planet.getWorkers(resource).ToString() + ")";
+        surplusText.text = "+" + planet.getSurplus(resource).ToString() + "  (" + planet.getWorkers(resource).ToString() + "/" + planet.getResource(resource).ToString() + ")";
     }
 
     public void updateNeedsInfo(Planet planet)

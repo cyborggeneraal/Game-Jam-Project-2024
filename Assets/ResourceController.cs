@@ -38,11 +38,14 @@ public class ResourceController : MonoBehaviour
             foreach (Planet planet in PlanetsController.instance.getAllPlanets())
             {
                 planet.fillStock();
-                if (UIController.instance.getSelectedIndex() != -1)
-                {
-                    UIController.instance.updateAllInfo();
-                }
+                planet.fillNeeds();
             }
+            foreach (supplyLine line in SupplyLineController.instance.getAllSupplyLines())
+            {
+                line.addStockPlanet();
+                line.removeStockPlanet();
+            }
+            UIController.instance.updateAllInfo();
             countdownT -= countdown;
         }
     }
@@ -52,9 +55,12 @@ public class ResourceController : MonoBehaviour
         HashSet<Resource> set = new HashSet<Resource>();
         foreach (Planet planet in PlanetsController.instance.getAllPlanets())
         {
-            foreach (Resource resource in planet.resources.Keys)
+            if (planet.isDiscovered())
             {
-                set.Add(resource);
+                foreach (Resource resource in planet.resources.Keys)
+                {
+                    set.Add(resource);
+                }
             }
         }
         unlockedResources = new List<Resource>();

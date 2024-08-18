@@ -195,7 +195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8e1fb35f6c426e4587f547fe61711d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shipPrefab: {fileID: 5777479685983581307, guid: 5d7a836cdf2506848ac231a64ff37e54, type: 3}
+  shipPrefab: {fileID: 5777479685983581307, guid: c050d09e884c22c448850840f170e3eb, type: 3}
 --- !u!1 &90601382
 GameObject:
   m_ObjectHideFlags: 0
@@ -1680,7 +1680,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 822623321}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 134307255}
+        m_TargetAssemblyTypeName: UIController, Assembly-CSharp
+        m_MethodName: buyWorkers
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &822623321
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3146,7 +3158,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1706355636
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3599,34 +3611,6 @@ PrefabInstance:
     - target: {fileID: 672735644879667145, guid: 367e16cc913e82940ab4878aea8c72ff, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7369147647940150292, guid: 367e16cc913e82940ab4878aea8c72ff, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7369147647940150292, guid: 367e16cc913e82940ab4878aea8c72ff, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7369147647940150292, guid: 367e16cc913e82940ab4878aea8c72ff, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 181621456}
-    - target: {fileID: 7369147647940150292, guid: 367e16cc913e82940ab4878aea8c72ff, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7369147647940150292, guid: 367e16cc913e82940ab4878aea8c72ff, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: pressDeliverButton
-      objectReference: {fileID: 0}
-    - target: {fileID: 7369147647940150292, guid: 367e16cc913e82940ab4878aea8c72ff, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UIResourceRow, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 7369147647940150292, guid: 367e16cc913e82940ab4878aea8c72ff, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 8848145833914086928, guid: 367e16cc913e82940ab4878aea8c72ff, type: 3}
       propertyPath: m_Name

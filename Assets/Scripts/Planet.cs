@@ -17,6 +17,8 @@ public class Planet
     public int idle_workers;
     public Vector3 position;
 
+    bool discovered = false;
+
     public Planet(float x, float y, float z)
     {
         resources = new Dictionary<Resource, int>();
@@ -24,7 +26,7 @@ public class Planet
         stock = new Dictionary<Resource, int>();
         multipliers = new Dictionary<Resource, int>();
         workers = new Dictionary<Resource, int>();
-        worker_costs = (Resource.Wood, 2);
+        worker_costs = (Resource.Wheat, 10);
         statisfaction = 100;
         punishment = 1;
         idle_workers = 0;
@@ -104,6 +106,11 @@ public class Planet
             }
         }
         return result;
+    }
+
+    public int getResource(Resource resource)
+    {
+        return resources.ContainsKey(resource) ? resources[resource] : 0;
     }
 
 
@@ -289,5 +296,15 @@ public class Planet
         }
 
         return null;
+    }
+
+    public void setDiscovered()
+    {
+        discovered = true;
+    }
+
+    public bool isDiscovered()
+    {
+        return discovered;
     }
 }

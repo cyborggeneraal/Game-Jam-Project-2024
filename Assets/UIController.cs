@@ -32,8 +32,6 @@ public class UIController : MonoBehaviour
     public Resource selectedResource = Resource.Wood;
     [SerializeField] LayerMask planets;
 
-    bool placeShipMode = false;
-
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -113,10 +111,20 @@ public class UIController : MonoBehaviour
         updateAllInfo();
         int index = clickObject.GetComponent<PlanetGameObject>().getIndex();
         int selectedIndex = UIController.instance.selectedIndex;
-        if (index != selectedIndex)
+        bool check = false;
+        Planet planetB = PlanetsController.instance.getPlanetById(index);
+        Planet planetA = PlanetsController.instance.getPlanetById(selectedIndex);
+        foreach (supplyLine line in SupplyLineController.instance.getAllSupplyLines())
         {
-            Planet planetB = PlanetsController.instance.getPlanetById(index);
-            Planet planetA = PlanetsController.instance.getPlanetById(selectedIndex);
+            if (line.planet_a == planetA && line.planet_b == planetB ||
+                line.planet_a == planetB && line.planet_b == planetB)
+            {
+                check = true;
+                break;
+            }
+        }
+        if (index != selectedIndex && !check)
+        {
             supplyLine supplyLine = planetA.buySupplyLine(Ship.Wooden, planetB);
             GameObject ship = Instantiate(SupplyLineController.instance.getShipPrefab());
             ship.transform.Rotate(0.0f, 180.0f, 0.0f, Space.World);
@@ -210,9 +218,15 @@ public class UIController : MonoBehaviour
             placeShipMessage.SetActive(true);
             clickMode = ClickMode.shipPlaceMode;
         }
-        else
+    }
+
+    public void buyWorkers()
+    {
+        Planet selectedPlanet = PlanetsController.instance.getPlanetById(selectedIndex);
+        if (selectedPlanet.getStock(Resource.Wheat) >= 10)
         {
-            Debug.Log("Cannot Buy");
+            selectedPlanet.buyWorker(1);
         }
+        updateAllInfo();
     }
 }
