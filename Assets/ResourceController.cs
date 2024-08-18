@@ -12,6 +12,8 @@ public class ResourceController : MonoBehaviour
     public List<Resource> unlockedResources;
     [SerializeField] int speedNeed = 7;
 
+    public int scoreTimer = 0;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -55,6 +57,7 @@ public class ResourceController : MonoBehaviour
                 planetObject.satisfactionUI.updateSatisfaction(planet.statisfaction);
             }
             UIController.instance.updateAllInfo();
+            scoreTimer++;
             countdownT -= countdown;
         }
     }
@@ -151,6 +154,12 @@ public class ResourceController : MonoBehaviour
     void gameOver()
     {
         gameOverController.instance.gameObject.SetActive(true);
+        int numberOfPlanets = 0;
+        foreach (Planet planet in PlanetsController.instance.getAllPlanets())
+        {
+            numberOfPlanets += planet.isDiscovered() ? 1 : 0;
+        }
+        gameOverController.instance.gameObject.GetComponent<gameOverController>().setScore(scoreTimer * numberOfPlanets);
         SceneManager.LoadScene("MainMenu");
     }
 

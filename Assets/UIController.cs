@@ -14,6 +14,7 @@ public class UIController : MonoBehaviour
     public GameObject deliverShipMessage;
 
     public static UIController instance;
+    public TMP_Text scoreText;
 
     public enum ClickMode
     {
@@ -197,6 +198,17 @@ public class UIController : MonoBehaviour
             row.updateInfo();
         }
         updateIdleWorkers();
+        updateScoreInfo();
+    }
+
+    void updateScoreInfo()
+    {
+        int numberOfPlanets = 0;
+        foreach (Planet planet in PlanetsController.instance.getAllPlanets())
+        {
+            numberOfPlanets += planet.isDiscovered() ? 1 : 0;
+        }
+        scoreText.text = "Score: " + ResourceController.instance.scoreTimer * numberOfPlanets;
     }
 
     public void buyShips()

@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class gameOverController : MonoBehaviour
 {
+    [SerializeField] TMP_Text scoreText;
     public static gameOverController instance;
     // Start is called before the first frame update
     void Start()
@@ -24,5 +26,10 @@ public class gameOverController : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void setScore(int score)
+    {
+        scoreText.text = "Score: " + score.ToString();
     }
 }

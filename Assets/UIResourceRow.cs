@@ -6,7 +6,11 @@ using TMPro;
 
 public class UIResourceRow : MonoBehaviour
 {
-    [SerializeField] TMP_Text nameText;
+    [SerializeField] GameObject resourceIconWood;
+    [SerializeField] GameObject resourceIconCoal;
+    [SerializeField] GameObject resourceIconWheat;
+    [SerializeField] GameObject resourceIconIron;
+    [SerializeField] GameObject resourceIconOil;
     [SerializeField] TMP_Text stockText;
     [SerializeField] TMP_Text surplusText;
     [SerializeField] TMP_Text receiveText;
@@ -46,7 +50,51 @@ public class UIResourceRow : MonoBehaviour
 
     public void updateNameInfo()
     {
-        nameText.text = resource.ToString();
+        if (resource == Resource.Wood)
+        {
+            resourceIconWood.SetActive(true);
+        }
+        else
+        {
+            resourceIconWood.SetActive(false);
+        }
+
+        if (resource == Resource.Coal)
+        {
+            resourceIconCoal.SetActive(true);
+        }
+        else
+        {
+            resourceIconCoal.SetActive(false);
+        }
+
+        if (resource == Resource.Wheat)
+        {
+            resourceIconWheat.SetActive(true);
+        }
+        else
+        {
+            resourceIconWheat.SetActive(false);
+        }
+
+        if (resource == Resource.Iron)
+        {
+            resourceIconIron.SetActive(true);
+        }
+        else
+        {
+            resourceIconIron.SetActive(false);
+        }
+
+        if (resource == Resource.Oil)
+        {
+            resourceIconOil.SetActive(true);
+        }
+        else
+        {
+            resourceIconOil.SetActive(false);
+        }
+
     }
 
     public void updateStockInfo(Planet planet)
