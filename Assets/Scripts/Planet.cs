@@ -121,13 +121,13 @@ public class Planet
     {
         foreach(KeyValuePair<Resource, int> need in needs)
         {
-            if (need.Value > stock[need.Key])
+            if (need.Value > getStock(need.Key))
             {
-                statisfaction -= ((need.Value - stock[need.Key]) * punishment);
+                statisfaction -= ((need.Value - getStock(need.Key)) * punishment);
                 stock[need.Key] = 0;
             }
             else
-                stock[need.Key] = (stock[need.Key] - need.Value);
+                stock[need.Key] = (getStock(need.Key) - need.Value);
         }
     }
 

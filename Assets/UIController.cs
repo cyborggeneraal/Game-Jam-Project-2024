@@ -9,8 +9,6 @@ public class UIController : MonoBehaviour
     [SerializeField] GameObject panel;
     [SerializeField] List<UIResourceRow> UIRows;
     [SerializeField] TMP_Text idleWorkersCount;
-    [SerializeField] GameObject tooltipPanel;
-    [SerializeField] TMP_Text tooltipText;
 
     [SerializeField] GameObject placeShipMessage;
     public GameObject deliverShipMessage;
@@ -81,11 +79,6 @@ public class UIController : MonoBehaviour
                 placeShipMessage.SetActive(false);
                 clickMode = ClickMode.defaultMode;
             }
-        }
-
-        if (tooltipPanel.activeSelf)
-        {
-            tooltipPanel.transform.position = Input.mousePosition;
         }
 
     }
@@ -200,16 +193,6 @@ public class UIController : MonoBehaviour
             row.updateInfo();
         }
         updateIdleWorkers();
-    }
-
-    public void showTooltip(bool show = true)
-    {
-        tooltipPanel.SetActive(show);
-    }
-
-    public void setTooltipText(string text)
-    {
-        tooltipText.text = text;
     }
 
     public void buyShips()
