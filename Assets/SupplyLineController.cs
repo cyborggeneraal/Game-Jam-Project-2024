@@ -45,6 +45,7 @@ public class SupplyLineController : MonoBehaviour
         {
             ssupplyLine.planet_b.addWorker(3);
             ssupplyLine.planet_b.setDiscovered();
+            GeneratorController.instance.addNextPlanet();
             ResourceController.instance.updateUnlockedResources();
             UIController.instance.updateAllInfo();
         }

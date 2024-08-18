@@ -45,6 +45,7 @@ public class ResourceController : MonoBehaviour
                 line.addStockPlanet();
                 line.removeStockPlanet();
             }
+            updateAllNeeds();
             UIController.instance.updateAllInfo();
             countdownT -= countdown;
         }
@@ -71,6 +72,55 @@ public class ResourceController : MonoBehaviour
                 unlockedResources.Add(resource);
             }
         }
+    }
+
+    public void updateAllNeeds()
+    {
+        foreach (Planet planet in PlanetsController.instance.getAllPlanets())
+        {
+            planet.needLevel++;
+            if (planet.isDiscovered())
+            {
+                foreach (Resource resource in getNeeds(planet.needLevel))
+                {
+                    planet.addNeed(resource, 1);
+                }
+            }
+        }
+    }
+
+    public HashSet<Resource> getNeeds(int level)
+    {
+        HashSet<Resource> result = new HashSet<Resource>();
+        if (level % 5 == 0)
+        {
+            Dictionary<int, HashSet<Resource>> needPool = GeneratorController.instance.unlockResources;
+            if (needPool.ContainsKey(level/5))
+            {
+                foreach (Resource resource in needPool[level/5])
+                {
+                    result.Add(resource);
+                }
+            }
+
+            List<Resource> pool = new List<Resource>();
+            for (int i = 1; i <= level/5; i++)
+            {
+                if (needPool.ContainsKey(i/5 - 3))
+                {
+                    foreach (Resource resource in needPool[i/5 - 3])
+                    {
+                        result.Add(resource);
+                    }
+                }
+            }
+            if (pool.Count > 0)
+            {
+                result.Add(pool[Random.Range(0, pool.Count)]);
+            }
+        }
+        return result;
+
     }
 
 }

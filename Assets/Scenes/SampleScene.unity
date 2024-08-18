@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 85691005}
   - component: {fileID: 85691007}
   - component: {fileID: 85691008}
+  - component: {fileID: 85691009}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -196,6 +197,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shipPrefab: {fileID: 5777479685983581307, guid: c050d09e884c22c448850840f170e3eb, type: 3}
+--- !u!114 &85691009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 85691004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c86f80bbcc8440a4c9a78b2d4ca0e264, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radiusRing: 10
 --- !u!1 &90601382
 GameObject:
   m_ObjectHideFlags: 0
@@ -508,6 +522,7 @@ MonoBehaviour:
   placeShipMessage: {fileID: 1239336099}
   deliverShipMessage: {fileID: 1504471419}
   clickMode: 0
+  selectedIndex: -1
   selectedResource: 0
   planets:
     serializedVersion: 2

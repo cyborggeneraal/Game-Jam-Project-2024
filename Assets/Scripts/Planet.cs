@@ -16,6 +16,7 @@ public class Planet
     public int punishment;
     public int idle_workers;
     public Vector3 position;
+    public int needLevel = 0;
 
     bool discovered = false;
 
@@ -32,7 +33,7 @@ public class Planet
         idle_workers = 0;
         position.x = x;
         position.y = y;
-        position.z = z;  
+        position.z = z;
     }
 
 

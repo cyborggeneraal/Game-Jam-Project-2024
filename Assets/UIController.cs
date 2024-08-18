@@ -28,7 +28,7 @@ public class UIController : MonoBehaviour
 
     Camera cam;
     bool onUI = false;
-    int selectedIndex = -1;
+    public int selectedIndex = -1;
     public Resource selectedResource = Resource.Wood;
     [SerializeField] LayerMask planets;
 
@@ -53,7 +53,6 @@ public class UIController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(clickMode);
         if (Input.GetMouseButtonDown(0) && !onUI)
         {
             RaycastHit hit;
@@ -117,7 +116,7 @@ public class UIController : MonoBehaviour
         foreach (supplyLine line in SupplyLineController.instance.getAllSupplyLines())
         {
             if (line.planet_a == planetA && line.planet_b == planetB ||
-                line.planet_a == planetB && line.planet_b == planetB)
+                line.planet_a == planetB && line.planet_b == planetA)
             {
                 check = true;
                 break;
@@ -175,8 +174,11 @@ public class UIController : MonoBehaviour
 
     public void updateIdleWorkers()
     {
-        Planet planet = PlanetsController.instance.getPlanetById(selectedIndex);
-        idleWorkersCount.text = planet.idle_workers.ToString();
+        if (selectedIndex != -1)
+        {
+            Planet planet = PlanetsController.instance.getPlanetById(selectedIndex);
+            idleWorkersCount.text = planet.idle_workers.ToString();
+        }
     }
 
     public void updateAllInfo()

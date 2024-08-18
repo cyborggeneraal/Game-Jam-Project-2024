@@ -29,7 +29,7 @@ public class PlanetsController : MonoBehaviour
 
     private void Start()
     {
-        firstPlanet();
+
     }
 
     public int addPlanet(Planet planet, PlanetGameObject planetGameObject)
@@ -70,7 +70,8 @@ public class PlanetsController : MonoBehaviour
 
     public void firstPlanet()
     {
-        GameObject planetGameObject = Instantiate(planetPrefab, new Vector3(0.0f, 0.0f, 0.0f), Quaternion.identity);
+        GameObject planetGameObject = spawnPlanet(Vector3.zero);
+        planetGameObject.GetComponent<PlanetGameObject>().turnOffFog();
         Planet planet = getPlanetById(planetGameObject.GetComponent<PlanetGameObject>().getIndex());
         planet.addWorker(5);
         planet.addResource(Resource.Wood, 5);
@@ -84,6 +85,14 @@ public class PlanetsController : MonoBehaviour
         Planet planet2 = getPlanetById(planetGameObject2.GetComponent<PlanetGameObject>().getIndex());
         planet2.addResource(Resource.Wood, 10);
         planet2.addResource(Resource.Wheat, 5);
+        planetGameObject2.GetComponent<PlanetGameObject>().turnOffFog();
+
+        Instantiate(planetPrefab, new Vector3(-5.0f, 0.0f, 0.0f), Quaternion.identity);
+    }
+
+    public GameObject spawnPlanet(Vector3 pos)
+    {
+        return Instantiate(planetPrefab, pos, Quaternion.identity);
     }
 
     public void addWorkerToResource(Resource resource)
