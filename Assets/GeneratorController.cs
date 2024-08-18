@@ -33,9 +33,8 @@ public class GeneratorController : MonoBehaviour
         unlockResources = new Dictionary<int, HashSet<Resource>>(){
                 { 1, new HashSet<Resource>(){Resource.Wood, Resource.Coal}},
                 { 2, new HashSet<Resource>(){Resource.Wheat}},
-                { 3, new HashSet<Resource>(){Resource.Stone}},
-                { 6, new HashSet<Resource>(){Resource.Iron}},
-                { 9, new HashSet<Resource>(){Resource.Oil}},
+                { 3, new HashSet<Resource>(){Resource.Iron}},
+                { 6, new HashSet<Resource>(){Resource.Oil}}
         };
         planets = new List<GameObject>();
         resourceTiers = new Dictionary<Resource, int>();
@@ -144,6 +143,7 @@ public class GeneratorController : MonoBehaviour
         GameObject planetGameObject = PlanetsController.instance.spawnPlanet(Vector3.zero);
         planetGameObject.GetComponent<PlanetGameObject>().turnOffFog();
         planetGameObject.GetComponent<PlanetGameObject>().setVariant(1);
+        planetGameObject.GetComponent<PlanetGameObject>().turnonSatisfaction();
         planets.Add(planetGameObject);
         addNextPlanet();
         Planet planet = PlanetsController.instance.getPlanetById(planetGameObject.GetComponent<PlanetGameObject>().getIndex());
