@@ -36,6 +36,8 @@ public class UIResourceRow : MonoBehaviour
         updateStockInfo(selectedPlanet);
         updateSurplusInfo(selectedPlanet);
         updateNeedsInfo(selectedPlanet);
+        updateDeliverInfo(selectedPlanet);
+        updateReceiveInfo(selectedPlanet);
     }
 
     public void updateNameInfo()
@@ -56,6 +58,16 @@ public class UIResourceRow : MonoBehaviour
     public void updateNeedsInfo(Planet planet)
     {
         needsText.text = "-" + planet.getNeeds(resource).ToString();
+    }
+
+    public void updateReceiveInfo(Planet planet)
+    {
+        receiveText.text = "+" + planet.getReceive(resource).ToString();
+    }
+
+    public void updateDeliverInfo(Planet planet)
+    {
+        deliverText.text = "-" + planet.getDeliver(resource).ToString();
     }
 
     public Button getPlusButton()
@@ -84,7 +96,6 @@ public class UIResourceRow : MonoBehaviour
 
     public void pressDeliverButton()
     {
-        int index = UIController.instance.getSelectedIndex();
         UIController.instance.clickMode = UIController.ClickMode.shipDeliverMode;
         UIController.instance.selectedResource = resource;
         UIController.instance.deliverShipMessage.SetActive(true);

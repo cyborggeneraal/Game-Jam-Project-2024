@@ -59,11 +59,16 @@ public class SupplyLineController : MonoBehaviour
                 line.addDelivery(resource, 1, Line.A);
                 break;
             }
-            if (line.planet_b == planetB && line.planet_a == planetB)
+            if (line.planet_b == planetA && line.planet_a == planetB)
             {
                 line.addDelivery(resource, 1, Line.B);
                 break;
             }
         }
+    }
+
+    public List<supplyLine> getAllSupplyLines()
+    {
+        return supplyLines;
     }
 }

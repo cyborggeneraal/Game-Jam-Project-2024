@@ -72,6 +72,40 @@ public class Planet
         return workers.ContainsKey(resource) ? workers[resource] : 0;
     }
 
+    public int getReceive(Resource resource)
+    {
+        int result = 0;
+        foreach (supplyLine line in SupplyLineController.instance.getAllSupplyLines())
+        {
+            if (line.planet_a == this)
+            {
+                result += line.delivery_b.ContainsKey(resource) ? line.delivery_b[resource] : 0;
+            }
+            if (line.planet_b == this)
+            {
+                result += line.delivery_a.ContainsKey(resource) ? line.delivery_a[resource] : 0;
+            }
+        }
+        return result;
+    }
+
+    public int getDeliver(Resource resource)
+    {
+        int result = 0;
+        foreach (supplyLine line in SupplyLineController.instance.getAllSupplyLines())
+        {
+            if (line.planet_a == this)
+            {
+                result += line.delivery_a.ContainsKey(resource) ? line.delivery_a[resource] : 0;
+            }
+            if (line.planet_b == this)
+            {
+                result += line.delivery_b.ContainsKey(resource) ? line.delivery_b[resource] : 0;
+            }
+        }
+        return result;
+    }
+
 
 
     //1.2 Resource fulfillment

@@ -142,6 +142,8 @@ public class UIController : MonoBehaviour
 
             clickMode = ClickMode.defaultMode;
             UIController.instance.deliverShipMessage.SetActive(false);
+
+            updateAllInfo();
         }
     }
 
