@@ -31,13 +31,17 @@ public class UIResourceRow : MonoBehaviour
 
     public void updateInfo()
     {
-        Planet selectedPlanet = PlanetsController.instance.getPlanetById(UIController.instance.getSelectedIndex());
-        updateNameInfo();
-        updateStockInfo(selectedPlanet);
-        updateSurplusInfo(selectedPlanet);
-        updateNeedsInfo(selectedPlanet);
-        updateDeliverInfo(selectedPlanet);
-        updateReceiveInfo(selectedPlanet);
+        int selectedIndex = UIController.instance.selectedIndex;
+        if (selectedIndex != -1)
+        {
+            Planet selectedPlanet = PlanetsController.instance.getPlanetById(selectedIndex);
+            updateNameInfo();
+            updateStockInfo(selectedPlanet);
+            updateSurplusInfo(selectedPlanet);
+            updateNeedsInfo(selectedPlanet);
+            updateDeliverInfo(selectedPlanet);
+            updateReceiveInfo(selectedPlanet);
+        }
     }
 
     public void updateNameInfo()
@@ -52,7 +56,7 @@ public class UIResourceRow : MonoBehaviour
 
     public void updateSurplusInfo(Planet planet)
     {
-        surplusText.text = "+" + planet.getSurplus(resource).ToString() + "  (" + planet.getWorkers(resource).ToString() + "/" + planet.getResource(resource).ToString() + ")";
+        surplusText.text = "+" + planet.getSurplus(resource).ToString() + " (" + planet.getWorkers(resource).ToString() + "/" + planet.getResource(resource).ToString() + ")";
     }
 
     public void updateNeedsInfo(Planet planet)

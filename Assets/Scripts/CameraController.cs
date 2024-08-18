@@ -15,7 +15,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] float maxCamDis = 10.0f;
     [SerializeField] float minCamRotate = 45.0f;
     [SerializeField] float maxCamRotate = 90.0f;
-    [SerializeField] float maxCamRadius = 2.0f;
+    static public float maxCamRadius = 2.0f;
 
     Vector3 mousePos;
 
