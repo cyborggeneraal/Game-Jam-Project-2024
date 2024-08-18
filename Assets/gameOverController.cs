@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
-public class DontDestroyOnLoad : MonoBehaviour
+public class gameOverController : MonoBehaviour
 {
-    static DontDestroyOnLoad instance;
+    [SerializeField] TMP_Text scoreText;
+    public static gameOverController instance;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,11 +19,17 @@ public class DontDestroyOnLoad : MonoBehaviour
             instance = this;
         }
         DontDestroyOnLoad(gameObject);
+        gameObject.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void setScore(int score)
+    {
+        scoreText.text = "Score: " + score.ToString();
     }
 }

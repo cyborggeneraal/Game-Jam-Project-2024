@@ -125,9 +125,61 @@ public class Planet
             {
                 statisfaction -= ((need.Value - getStock(need.Key)) * punishment);
                 stock[need.Key] = 0;
+                Debug.Log("hi");
+                PlanetGameObject planetObject = PlanetsController.instance.getPlanetGameObjectById(PlanetsController.instance.getAllPlanets().IndexOf(this));
+                switch (need.Key)
+                {
+                    case Resource.Wood:
+                        planetObject.woodIcons[0].SetActive(false);
+                        planetObject.woodIcons[1].SetActive(true);
+                        break;
+                    case Resource.Coal:
+                        planetObject.coalIcons[0].SetActive(false);
+                        planetObject.coalIcons[1].SetActive(true);
+                        break;
+                    case Resource.Wheat:
+                        planetObject.wheatIcons[0].SetActive(false);
+                        planetObject.wheatIcons[1].SetActive(true);
+                        break;
+                    case Resource.Iron:
+                        planetObject.ironIcons[0].SetActive(false);
+                        planetObject.ironIcons[1].SetActive(true);
+                        break;
+                    case Resource.Oil:
+                        planetObject.oilIcons[0].SetActive(false);
+                        planetObject.oilIcons[1].SetActive(true);
+                        break;
+                }
             }
             else
+            {
                 stock[need.Key] = (getStock(need.Key) - need.Value);
+                PlanetGameObject planetObject = PlanetsController.instance.getPlanetGameObjectById(PlanetsController.instance.getAllPlanets().IndexOf(this));
+                switch (need.Key)
+                {
+                    case Resource.Wood:
+                        planetObject.woodIcons[0].SetActive(true);
+                        planetObject.woodIcons[1].SetActive(false);
+                        break;
+                    case Resource.Coal:
+                        planetObject.coalIcons[0].SetActive(true);
+                        planetObject.coalIcons[1].SetActive(false);
+                        break;
+                    case Resource.Wheat:
+                        planetObject.wheatIcons[0].SetActive(true);
+                        planetObject.wheatIcons[1].SetActive(false);
+                        break;
+                    case Resource.Iron:
+                        planetObject.ironIcons[0].SetActive(true);
+                        planetObject.ironIcons[1].SetActive(false);
+                        break;
+                    case Resource.Oil:
+                        planetObject.oilIcons[0].SetActive(true);
+                        planetObject.oilIcons[1].SetActive(false);
+                        break;
+                }
+            }
+                
         }
     }
 

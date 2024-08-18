@@ -9,6 +9,12 @@ public class PlanetGameObject : MonoBehaviour
     [SerializeField] GameObject fog;
     public satisfactionController satisfactionUI;
 
+    public GameObject[] woodIcons;
+    public GameObject[] coalIcons;
+    public GameObject[] wheatIcons;
+    public GameObject[] ironIcons;
+    public GameObject[] oilIcons;
+
     int index;
 
     // Start is called before the first frame update

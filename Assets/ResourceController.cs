@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ResourceController : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class ResourceController : MonoBehaviour
     float countdownT = 0.0f;
     public List<Resource> unlockedResources;
     [SerializeField] int speedNeed = 7;
+
+    public int scoreTimer = 0;
 
     // Start is called before the first frame update
     void Awake()
@@ -36,16 +39,17 @@ public class ResourceController : MonoBehaviour
         countdownT += Time.fixedDeltaTime;
         if (countdownT >= countdown)
         {
-            foreach (Planet planet in PlanetsController.instance.getAllPlanets())
-            {
-                planet.fillStock();
-                planet.fillNeeds();
-            }
             foreach (supplyLine line in SupplyLineController.instance.getAllSupplyLines())
             {
                 line.addStockPlanet();
                 line.removeStockPlanet();
             }
+            foreach (Planet planet in PlanetsController.instance.getAllPlanets())
+            {
+                planet.fillStock();
+                planet.fillNeeds();
+            }
+            checkGameOver();
             updateAllNeeds();
             foreach (PlanetGameObject planetObject in PlanetsController.instance.getAllPlanetGameObjects())
             {
@@ -53,6 +57,7 @@ public class ResourceController : MonoBehaviour
                 planetObject.satisfactionUI.updateSatisfaction(planet.statisfaction);
             }
             UIController.instance.updateAllInfo();
+            scoreTimer++;
             countdownT -= countdown;
         }
     }
@@ -132,6 +137,30 @@ public class ResourceController : MonoBehaviour
         }
         return result;
 
+    }
+
+    void checkGameOver()
+    {
+        foreach (Planet planet in PlanetsController.instance.getAllPlanets())
+        {
+            if (planet.statisfaction <= 0)
+            {
+                gameOver();
+                return;
+            }
+        }
+    }
+
+    void gameOver()
+    {
+        gameOverController.instance.gameObject.SetActive(true);
+        int numberOfPlanets = 0;
+        foreach (Planet planet in PlanetsController.instance.getAllPlanets())
+        {
+            numberOfPlanets += planet.isDiscovered() ? 1 : 0;
+        }
+        gameOverController.instance.gameObject.GetComponent<gameOverController>().setScore(scoreTimer * numberOfPlanets);
+        SceneManager.LoadScene("MainMenu");
     }
 
 }
