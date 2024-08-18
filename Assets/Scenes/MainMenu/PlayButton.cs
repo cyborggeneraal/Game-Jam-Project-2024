@@ -7,6 +7,6 @@ public class MainManu : MonoBehaviour
 {
     public void PlayButton()
     {
-        SceneManager.LoadScene("Game");
+        SceneManager.LoadScene("SampleScene");
     }
 }
