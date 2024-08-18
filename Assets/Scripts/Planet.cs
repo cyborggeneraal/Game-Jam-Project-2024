@@ -29,7 +29,7 @@ public class Planet
         workers = new Dictionary<Resource, int>();
         worker_costs = (Resource.Wheat, 10);
         statisfaction = 100;
-        punishment = 1;
+        punishment = 5;
         idle_workers = 0;
         position.x = x;
         position.y = y;
@@ -227,7 +227,14 @@ public class Planet
 
     public void addNeed(Resource resource, int value)
     {
-        needs.Add(resource, value);
+        if (needs.ContainsKey(resource))
+        {
+            needs[resource] += value;
+        }
+        else
+        {
+            needs.Add(resource, value);
+        }
     }
 
     public void addWorker(int n)
