@@ -103,5 +103,7 @@ public class UIResourceRow : MonoBehaviour
         UIController.instance.clickMode = UIController.ClickMode.shipDeliverMode;
         UIController.instance.selectedResource = resource;
         UIController.instance.deliverShipMessage.SetActive(true);
+        UIController.instance.panel.SetActive(false);
+        UIController.instance.onUI = false;
     }
 }

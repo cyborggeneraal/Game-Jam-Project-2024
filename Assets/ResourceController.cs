@@ -47,6 +47,11 @@ public class ResourceController : MonoBehaviour
                 line.removeStockPlanet();
             }
             updateAllNeeds();
+            foreach (PlanetGameObject planetObject in PlanetsController.instance.getAllPlanetGameObjects())
+            {
+                Planet planet = PlanetsController.instance.getPlanetById(planetObject.getIndex());
+                planetObject.satisfactionUI.updateSatisfaction(planet.statisfaction);
+            }
             UIController.instance.updateAllInfo();
             countdownT -= countdown;
         }
@@ -92,6 +97,7 @@ public class ResourceController : MonoBehaviour
                 }
             }
         }
+        updateUnlockedResources();
     }
 
     public HashSet<Resource> getNeeds(int level)

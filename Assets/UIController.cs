@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
-    [SerializeField] GameObject panel;
+    public GameObject panel;
     [SerializeField] List<UIResourceRow> UIRows;
     [SerializeField] TMP_Text idleWorkersCount;
 
@@ -25,7 +25,7 @@ public class UIController : MonoBehaviour
     public ClickMode clickMode = ClickMode.defaultMode;
 
     Camera cam;
-    bool onUI = false;
+    public bool onUI = false;
     public int selectedIndex = -1;
     public Resource selectedResource = Resource.Wood;
     [SerializeField] LayerMask planets;
@@ -77,6 +77,7 @@ public class UIController : MonoBehaviour
                 panel.SetActive(false);
                 selectedIndex = -1;
                 placeShipMessage.SetActive(false);
+                deliverShipMessage.SetActive(false);
                 clickMode = ClickMode.defaultMode;
             }
         }
@@ -126,6 +127,8 @@ public class UIController : MonoBehaviour
             ship.GetComponent<ShipMovement>().setPlanets(planetATransform, planetBTransform);
             placeShipMessage.SetActive(false);
             clickMode = ClickMode.defaultMode;
+            panel.SetActive(true);
+            PlanetsController.instance.getPlanetGameObjectById(index).turnonSatisfaction();
         }
     }
 
@@ -141,6 +144,7 @@ public class UIController : MonoBehaviour
             SupplyLineController.instance.addDelivery(planetA, planetB, selectedResource);
 
             clickMode = ClickMode.defaultMode;
+            panel.SetActive(true);
             UIController.instance.deliverShipMessage.SetActive(false);
 
             updateAllInfo();
@@ -201,6 +205,8 @@ public class UIController : MonoBehaviour
         if (selectedPlanet.getStock(Resource.Wood) >= 10 && selectedPlanet.getStock(Resource.Coal) >= 10)
         {
             placeShipMessage.SetActive(true);
+            panel.SetActive(false);
+            onUI = false;
             clickMode = ClickMode.shipPlaceMode;
         }
     }
