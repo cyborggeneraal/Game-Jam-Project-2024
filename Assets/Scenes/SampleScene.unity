@@ -260,7 +260,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   countdown: 5
   unlockedResources: 
-  speedNeed: 1
+  speedNeed: 15
   scoreTimer: 0
 --- !u!114 &85691008
 MonoBehaviour:

@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class ChangeScene : MonoBehaviour
 {
-    public GameObject canvas;
     public void GoToMainMenu()
     {
         SceneManager.LoadScene("MainMenu");
@@ -14,7 +13,6 @@ public class ChangeScene : MonoBehaviour
     public void CloseGameOver()
     {
         gameObject.SetActive(false);
-        canvasScpt.canvas.SetActive(true);
     }
 
     public void QuitGame()

@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class canvasScpt : MonoBehaviour
 {
-    public static GameObject canvas;
+    public static GameObject canvasObject;
     // Start is called before the first frame update
     void Awake()
     {
-        canvas = this.gameObject;
+        canvasObject = this.gameObject;
+        gameObject.SetActive(false);
     }
 
     // Update is called once per frame

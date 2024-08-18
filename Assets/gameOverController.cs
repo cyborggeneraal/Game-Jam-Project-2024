@@ -7,7 +7,6 @@ public class gameOverController : MonoBehaviour
 {
     [SerializeField] TMP_Text scoreText;
     public static gameOverController instance;
-    public GameObject canvas;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,7 +17,6 @@ public class gameOverController : MonoBehaviour
         else
         {
             instance = this;
-            canvasScpt.canvas.SetActive(true);
         }
         DontDestroyOnLoad(gameObject);
         gameObject.SetActive(false);
