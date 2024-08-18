@@ -9,6 +9,7 @@ public class ResourceController : MonoBehaviour
     [SerializeField] float countdown = 5.0f;
     float countdownT = 0.0f;
     public List<Resource> unlockedResources;
+    [SerializeField] int speedNeed = 7;
 
     // Start is called before the first frame update
     void Awake()
@@ -62,6 +63,10 @@ public class ResourceController : MonoBehaviour
                 {
                     set.Add(resource);
                 }
+                foreach (Resource resource in planet.needs.Keys)
+                {
+                    set.Add(resource);
+                }
             }
         }
         unlockedResources = new List<Resource>();
@@ -78,9 +83,9 @@ public class ResourceController : MonoBehaviour
     {
         foreach (Planet planet in PlanetsController.instance.getAllPlanets())
         {
-            planet.needLevel++;
             if (planet.isDiscovered())
             {
+                planet.needLevel++;
                 foreach (Resource resource in getNeeds(planet.needLevel))
                 {
                     planet.addNeed(resource, 1);
@@ -92,23 +97,23 @@ public class ResourceController : MonoBehaviour
     public HashSet<Resource> getNeeds(int level)
     {
         HashSet<Resource> result = new HashSet<Resource>();
-        if (level % 5 == 0)
+        if (level % speedNeed == 0)
         {
             Dictionary<int, HashSet<Resource>> needPool = GeneratorController.instance.unlockResources;
-            if (needPool.ContainsKey(level/5))
+            if (needPool.ContainsKey(level/speedNeed))
             {
-                foreach (Resource resource in needPool[level/5])
+                foreach (Resource resource in needPool[level/speedNeed])
                 {
                     result.Add(resource);
                 }
             }
 
             List<Resource> pool = new List<Resource>();
-            for (int i = 1; i <= level/5; i++)
+            for (int i = 1; i <= level/speedNeed; i++)
             {
-                if (needPool.ContainsKey(i/5 - 3))
+                if (needPool.ContainsKey(i/speedNeed - 4))
                 {
-                    foreach (Resource resource in needPool[i/5 - 3])
+                    foreach (Resource resource in needPool[i/speedNeed - 4])
                     {
                         result.Add(resource);
                     }

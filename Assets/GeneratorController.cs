@@ -125,6 +125,7 @@ public class GeneratorController : MonoBehaviour
 
     public void addNewRingOfPlanets()
     {
+        CameraController.maxCamRadius = ringN * radiusRing;
         float randomAngle = Random.Range(0.0f, 360.0f);
         int numOfPlanets = ringN + 1;
         float radius = ringN * radiusRing;
