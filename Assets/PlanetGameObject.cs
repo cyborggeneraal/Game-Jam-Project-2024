@@ -6,6 +6,7 @@ public class PlanetGameObject : MonoBehaviour
 {
     [SerializeField] Planet planet;
     [SerializeField] GameObject[] planetVariants;
+    [SerializeField] GameObject fog;
 
     int index;
 
@@ -35,5 +36,10 @@ public class PlanetGameObject : MonoBehaviour
             planetVariant.SetActive(false);
         }
         planetVariants[variant].SetActive(true);
+    }
+
+    public void turnOffFog()
+    {
+        fog.SetActive(false);
     }
 }

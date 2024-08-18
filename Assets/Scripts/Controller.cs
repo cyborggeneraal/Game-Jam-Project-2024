@@ -26,17 +26,17 @@ public class Controller : MonoBehaviour
     {        
         if (Input.GetButtonDown("Fire1")) //ctrl l
         {
-            supplyline.addStockPlanet(Line.A);
+            supplyline.addStockPlanet();
         }
             
         if (Input.GetButtonDown("Fire2")) //alt l
         {
-            supplyline.addStockPlanet(Line.B);
+            supplyline.addStockPlanet();
         }  
         
         if (Input.GetButtonDown("Fire3")) //shift l
         {
-            supplyline.removeStockPlanet(Line.A);
+            supplyline.removeStockPlanet();
         }
 
         if (Input.GetButtonDown("Jump")) //space

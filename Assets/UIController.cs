@@ -13,24 +13,24 @@ public class UIController : MonoBehaviour
     [SerializeField] TMP_Text tooltipText;
 
     [SerializeField] GameObject placeShipMessage;
+    public GameObject deliverShipMessage;
 
     public static UIController instance;
 
-    enum ClickMode
+    public enum ClickMode
     {
         defaultMode,
         shipPlaceMode,
         shipDeliverMode
     }
 
-    ClickMode clickMode = ClickMode.defaultMode;
+    public ClickMode clickMode = ClickMode.defaultMode;
 
     Camera cam;
     bool onUI = false;
-    int selectedIndex = -1;
+    public int selectedIndex = -1;
+    public Resource selectedResource = Resource.Wood;
     [SerializeField] LayerMask planets;
-
-    bool placeShipMode = false;
 
     private void Awake()
     {
@@ -110,10 +110,20 @@ public class UIController : MonoBehaviour
         updateAllInfo();
         int index = clickObject.GetComponent<PlanetGameObject>().getIndex();
         int selectedIndex = UIController.instance.selectedIndex;
-        if (index != selectedIndex)
+        bool check = false;
+        Planet planetB = PlanetsController.instance.getPlanetById(index);
+        Planet planetA = PlanetsController.instance.getPlanetById(selectedIndex);
+        foreach (supplyLine line in SupplyLineController.instance.getAllSupplyLines())
         {
-            Planet planetB = PlanetsController.instance.getPlanetById(index);
-            Planet planetA = PlanetsController.instance.getPlanetById(selectedIndex);
+            if (line.planet_a == planetA && line.planet_b == planetB ||
+                line.planet_a == planetB && line.planet_b == planetA)
+            {
+                check = true;
+                break;
+            }
+        }
+        if (index != selectedIndex && !check)
+        {
             supplyLine supplyLine = planetA.buySupplyLine(Ship.Wooden, planetB);
             GameObject ship = Instantiate(SupplyLineController.instance.getShipPrefab());
             ship.transform.Rotate(0.0f, 180.0f, 0.0f, Space.World);
@@ -128,7 +138,20 @@ public class UIController : MonoBehaviour
 
     void clickShipDeliver(GameObject clickObject)
     {
-        
+        int index = clickObject.GetComponent<PlanetGameObject>().getIndex();
+        int selectedIndex = UIController.instance.selectedIndex;
+        if (index != selectedIndex)
+        {
+            Planet planetB = PlanetsController.instance.getPlanetById(index);
+            Planet planetA = PlanetsController.instance.getPlanetById(selectedIndex);
+
+            SupplyLineController.instance.addDelivery(planetA, planetB, selectedResource);
+
+            clickMode = ClickMode.defaultMode;
+            UIController.instance.deliverShipMessage.SetActive(false);
+
+            updateAllInfo();
+        }
     }
 
     void DeselectAllPlanets()
@@ -151,8 +174,11 @@ public class UIController : MonoBehaviour
 
     public void updateIdleWorkers()
     {
-        Planet planet = PlanetsController.instance.getPlanetById(selectedIndex);
-        idleWorkersCount.text = planet.idle_workers.ToString();
+        if (selectedIndex != -1)
+        {
+            Planet planet = PlanetsController.instance.getPlanetById(selectedIndex);
+            idleWorkersCount.text = planet.idle_workers.ToString();
+        }
     }
 
     public void updateAllInfo()
@@ -194,9 +220,15 @@ public class UIController : MonoBehaviour
             placeShipMessage.SetActive(true);
             clickMode = ClickMode.shipPlaceMode;
         }
-        else
+    }
+
+    public void buyWorkers()
+    {
+        Planet selectedPlanet = PlanetsController.instance.getPlanetById(selectedIndex);
+        if (selectedPlanet.getStock(Resource.Wheat) >= 10)
         {
-            Debug.Log("Cannot Buy");
+            selectedPlanet.buyWorker(1);
         }
+        updateAllInfo();
     }
 }

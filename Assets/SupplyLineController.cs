@@ -41,6 +41,14 @@ public class SupplyLineController : MonoBehaviour
         int index = supplyLines.Count;
         supplyLines.Add(ssupplyLine);
         supplyLineGameObjects.Add(ship);
+        if (!ssupplyLine.planet_b.isDiscovered())
+        {
+            ssupplyLine.planet_b.addWorker(3);
+            ssupplyLine.planet_b.setDiscovered();
+            GeneratorController.instance.addNextPlanet();
+            ResourceController.instance.updateUnlockedResources();
+            UIController.instance.updateAllInfo();
+        }
         return index;
 
     }
@@ -48,5 +56,27 @@ public class SupplyLineController : MonoBehaviour
     public GameObject getShipPrefab()
     {
         return shipPrefab;
+    }
+
+    public void addDelivery(Planet planetA, Planet planetB, Resource resource)
+    {
+        foreach (supplyLine line in supplyLines)
+        {
+            if (line.planet_a == planetA && line.planet_b == planetB)
+            {
+                line.addDelivery(resource, 1, Line.A);
+                break;
+            }
+            if (line.planet_b == planetA && line.planet_a == planetB)
+            {
+                line.addDelivery(resource, 1, Line.B);
+                break;
+            }
+        }
+    }
+
+    public List<supplyLine> getAllSupplyLines()
+    {
+        return supplyLines;
     }
 }

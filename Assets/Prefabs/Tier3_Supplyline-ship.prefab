@@ -28,7 +28,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0.0435, z: 0.0101}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.4}
+  m_LocalScale: {x: 0.03, y: 0.03, z: 0.06}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1258306595040664966}
@@ -116,7 +116,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.7
+      scalar: 0.2
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -4858,7 +4858,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 7.76, y: 0, z: -0.41718292}
-  m_LocalScale: {x: 73.5, y: 73.5, z: 73.5}
+  m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 864201179172247048}
@@ -4949,7 +4949,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: -0.019, y: 0.0435, z: -0.0009}
-  m_LocalScale: {x: 0.6041733, y: 0.6041732, z: 0.8}
+  m_LocalScale: {x: 0.09062601, y: 0.09062598, z: 0.12}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1258306595040664966}
@@ -5037,7 +5037,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.7
+      scalar: 0.2
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -9779,7 +9779,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: -0.0353, y: 0.0435, z: -0.0009}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.4}
+  m_LocalScale: {x: 0.03, y: 0.03, z: 0.06}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1258306595040664966}
@@ -9867,7 +9867,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.7
+      scalar: 0.2
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -14609,7 +14609,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0.019, y: 0.0435, z: -0.0009}
-  m_LocalScale: {x: 0.6041733, y: 0.6041732, z: 0.8}
+  m_LocalScale: {x: 0.09062601, y: 0.09062598, z: 0.12}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1258306595040664966}
@@ -14697,7 +14697,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.7
+      scalar: 0.2
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -19439,7 +19439,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0.0435, z: -0.0009}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.4}
+  m_LocalScale: {x: 0.03, y: 0.03, z: 0.06}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1258306595040664966}
@@ -19527,7 +19527,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.7
+      scalar: 0.2
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -24269,7 +24269,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0.0356, y: 0.0435, z: -0.0009}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.4}
+  m_LocalScale: {x: 0.03, y: 0.03, z: 0.06}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1258306595040664966}
@@ -24357,7 +24357,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.7
+      scalar: 0.2
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -29099,7 +29099,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0.0435, z: -0.0117}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.4}
+  m_LocalScale: {x: 0.03, y: 0.03, z: 0.06}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1258306595040664966}
@@ -29187,7 +29187,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.7
+      scalar: 0.2
       minScalar: 5
       maxCurve:
         serializedVersion: 2
