@@ -16,6 +16,9 @@ public class Planet
     public int punishment;
     public int idle_workers;
     public Vector3 position;
+    public int needLevel = 0;
+
+    bool discovered = false;
 
     public Planet(float x, float y, float z)
     {
@@ -24,13 +27,13 @@ public class Planet
         stock = new Dictionary<Resource, int>();
         multipliers = new Dictionary<Resource, int>();
         workers = new Dictionary<Resource, int>();
-        worker_costs = (Resource.Wood, 2);
+        worker_costs = (Resource.Wheat, 10);
         statisfaction = 100;
         punishment = 1;
         idle_workers = 0;
         position.x = x;
         position.y = y;
-        position.z = z;  
+        position.z = z;
     }
 
 
@@ -72,6 +75,45 @@ public class Planet
         return workers.ContainsKey(resource) ? workers[resource] : 0;
     }
 
+    public int getReceive(Resource resource)
+    {
+        int result = 0;
+        foreach (supplyLine line in SupplyLineController.instance.getAllSupplyLines())
+        {
+            if (line.planet_a == this)
+            {
+                result += line.delivery_b.ContainsKey(resource) ? line.delivery_b[resource] : 0;
+            }
+            if (line.planet_b == this)
+            {
+                result += line.delivery_a.ContainsKey(resource) ? line.delivery_a[resource] : 0;
+            }
+        }
+        return result;
+    }
+
+    public int getDeliver(Resource resource)
+    {
+        int result = 0;
+        foreach (supplyLine line in SupplyLineController.instance.getAllSupplyLines())
+        {
+            if (line.planet_a == this)
+            {
+                result += line.delivery_a.ContainsKey(resource) ? line.delivery_a[resource] : 0;
+            }
+            if (line.planet_b == this)
+            {
+                result += line.delivery_b.ContainsKey(resource) ? line.delivery_b[resource] : 0;
+            }
+        }
+        return result;
+    }
+
+    public int getResource(Resource resource)
+    {
+        return resources.ContainsKey(resource) ? resources[resource] : 0;
+    }
+
 
 
     //1.2 Resource fulfillment
@@ -79,13 +121,13 @@ public class Planet
     {
         foreach(KeyValuePair<Resource, int> need in needs)
         {
-            if (need.Value > stock[need.Key])
+            if (need.Value > getStock(need.Key))
             {
-                statisfaction -= ((need.Value - stock[need.Key]) * punishment);
+                statisfaction -= ((need.Value - getStock(need.Key)) * punishment);
                 stock[need.Key] = 0;
             }
             else
-                stock[need.Key] = (stock[need.Key] - need.Value);
+                stock[need.Key] = (getStock(need.Key) - need.Value);
         }
     }
 
@@ -255,5 +297,15 @@ public class Planet
         }
 
         return null;
+    }
+
+    public void setDiscovered()
+    {
+        discovered = true;
+    }
+
+    public bool isDiscovered()
+    {
+        return discovered;
     }
 }

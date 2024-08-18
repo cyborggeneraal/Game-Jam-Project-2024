@@ -60,42 +60,33 @@ public class supplyLine
         }
     }
 
-    public void addStockPlanet(Line line)
+    public void addStockPlanet()
     {
-        switch(line)
+        Dictionary<Resource, int> oldPlanetA = new Dictionary<Resource, int>();
+        foreach(KeyValuePair<Resource, int> delivery in delivery_b)
         {
-            case Line.A:
-                foreach(KeyValuePair<Resource, int> delivery in delivery_b)
-                {
-                    planet_a.addStock(delivery.Key, Math.Min(delivery.Value, planet_b.stock[delivery.Key]));
-                }
-                break;
-
-            case Line.B:
-                foreach(KeyValuePair<Resource, int> delivery in delivery_a)
-                {
-                    planet_b.addStock(delivery.Key, Math.Min(delivery.Value, planet_a.stock[delivery.Key]));
-                }
-                break;
+            oldPlanetA.Add(delivery.Key, planet_a.getStock(delivery.Key));
+            planet_a.addStock(delivery.Key, Math.Min(delivery.Value, planet_b.getStock(delivery.Key)));
+        }
+        foreach(KeyValuePair<Resource, int> delivery in delivery_a)
+        {
+            if (!oldPlanetA.ContainsKey(delivery.Key))
+            {
+                oldPlanetA.Add(delivery.Key, planet_a.getStock(delivery.Key));
+            }
+            planet_b.addStock(delivery.Key, Math.Min(delivery.Value, oldPlanetA[delivery.Key]));
         }
     }
 
-    public void removeStockPlanet(Line line)
+    public void removeStockPlanet()
     {
-        switch(line)
+        foreach(KeyValuePair<Resource, int> resource in delivery_a)
         {
-            case Line.A:
-                foreach(KeyValuePair<Resource, int> resource in delivery_a)
-                {
-                    planet_a.removeStock(resource.Key, resource.Value);
-                }
-                break;
-            case Line.B:
-                foreach(KeyValuePair<Resource, int> resource in delivery_a)
-                {
-                    planet_b.removeStock(resource.Key, resource.Value);
-                }
-                break;
+            planet_a.removeStock(resource.Key, resource.Value);
+        }
+        foreach(KeyValuePair<Resource, int> resource in delivery_b)
+        {
+            planet_b.removeStock(resource.Key, resource.Value);
         }
     }
 

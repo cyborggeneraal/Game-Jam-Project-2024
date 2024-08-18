@@ -9,6 +9,7 @@ public class ResourceController : MonoBehaviour
     [SerializeField] float countdown = 5.0f;
     float countdownT = 0.0f;
     public List<Resource> unlockedResources;
+    [SerializeField] int speedNeed = 7;
 
     // Start is called before the first frame update
     void Awake()
@@ -38,11 +39,15 @@ public class ResourceController : MonoBehaviour
             foreach (Planet planet in PlanetsController.instance.getAllPlanets())
             {
                 planet.fillStock();
-                if (UIController.instance.getSelectedIndex() != -1)
-                {
-                    UIController.instance.updateAllInfo();
-                }
+                planet.fillNeeds();
             }
+            foreach (supplyLine line in SupplyLineController.instance.getAllSupplyLines())
+            {
+                line.addStockPlanet();
+                line.removeStockPlanet();
+            }
+            updateAllNeeds();
+            UIController.instance.updateAllInfo();
             countdownT -= countdown;
         }
     }
@@ -52,9 +57,16 @@ public class ResourceController : MonoBehaviour
         HashSet<Resource> set = new HashSet<Resource>();
         foreach (Planet planet in PlanetsController.instance.getAllPlanets())
         {
-            foreach (Resource resource in planet.resources.Keys)
+            if (planet.isDiscovered())
             {
-                set.Add(resource);
+                foreach (Resource resource in planet.resources.Keys)
+                {
+                    set.Add(resource);
+                }
+                foreach (Resource resource in planet.needs.Keys)
+                {
+                    set.Add(resource);
+                }
             }
         }
         unlockedResources = new List<Resource>();
@@ -65,6 +77,55 @@ public class ResourceController : MonoBehaviour
                 unlockedResources.Add(resource);
             }
         }
+    }
+
+    public void updateAllNeeds()
+    {
+        foreach (Planet planet in PlanetsController.instance.getAllPlanets())
+        {
+            if (planet.isDiscovered())
+            {
+                planet.needLevel++;
+                foreach (Resource resource in getNeeds(planet.needLevel))
+                {
+                    planet.addNeed(resource, 1);
+                }
+            }
+        }
+    }
+
+    public HashSet<Resource> getNeeds(int level)
+    {
+        HashSet<Resource> result = new HashSet<Resource>();
+        if (level % speedNeed == 0)
+        {
+            Dictionary<int, HashSet<Resource>> needPool = GeneratorController.instance.unlockResources;
+            if (needPool.ContainsKey(level/speedNeed))
+            {
+                foreach (Resource resource in needPool[level/speedNeed])
+                {
+                    result.Add(resource);
+                }
+            }
+
+            List<Resource> pool = new List<Resource>();
+            for (int i = 1; i <= level/speedNeed; i++)
+            {
+                if (needPool.ContainsKey(i/speedNeed - 4))
+                {
+                    foreach (Resource resource in needPool[i/speedNeed - 4])
+                    {
+                        result.Add(resource);
+                    }
+                }
+            }
+            if (pool.Count > 0)
+            {
+                result.Add(pool[Random.Range(0, pool.Count)]);
+            }
+        }
+        return result;
+
     }
 
 }
