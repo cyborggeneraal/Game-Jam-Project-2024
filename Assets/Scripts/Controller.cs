@@ -4,40 +4,46 @@ using UnityEngine;
 
 public class Controller : MonoBehaviour
 {
-    public Planet planeet;
+    public Planet planet_a;
+    public Planet planet_b;
+    public supplyLine supplyline;
+    
 
     // Start is called before the first frame update
     void Start()
     {
-        planeet = new Planet(new Dictionary<Resource, int>(){{Resource.Wood, 2}}, 3, new Dictionary<Resource, int>(){{Resource.Wood, 1}}, 1, new Dictionary<Resource, int>(){{Resource.Wood, 2}});
-        
+        planet_a = new Planet(0, 0, 0);
+        planet_b = new Planet(0, 0, 0);
+        supplyline = new supplyLine(planet_a, planet_b, Ship.Wooden);
+        supplyline.addDelivery(Resource.Wood, 1, Line.A);
+        supplyline.addDelivery(Resource.Wood, 2, Line.B);
+        planet_a.addStock(Resource.Wood, 1);
+        planet_b.addStock(Resource.Wood, 1);
     }
 
     // Update is called once per frame
     void Update()
-    {
-        if (Input.GetButtonDown("Fire1"))
+    {        
+        if (Input.GetButtonDown("Fire1")) //ctrl l
         {
-            Debug.Log("Stock: " + planeet.stock[Resource.Wood].ToString() + " Needs: " + planeet.needs[Resource.Wood].ToString() + " Statisfaction: " + planeet.statisfaction.ToString());
+            supplyline.addStockPlanet();
         }
             
-        if (Input.GetButtonDown("Fire2"))
+        if (Input.GetButtonDown("Fire2")) //alt l
         {
-            
+            supplyline.addStockPlanet();
         }  
         
-        if (Input.GetButtonDown("Fire3"))
+        if (Input.GetButtonDown("Fire3")) //shift l
         {
-            planeet.Fill_Needs();
+            supplyline.removeStockPlanet();
         }
 
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump")) //space
         {
-            planeet.Fill_Stock();
+            Debug.Log("Wood A: " + planet_a.stock[Resource.Wood].ToString() + " Wood B: " + planet_b.stock[Resource.Wood].ToString());
         }
     }
-
-    
 }
 
 
